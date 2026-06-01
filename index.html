@@ -121,6 +121,7 @@
 
 <div class="header">
   <h1>Face ID Pilot <span>Abuja Field App</span></h1>
+  <div id="sync-indicator" style="font-size:11px;color:rgba(255,255,255,0.5);margin-bottom:6px;letter-spacing:.01em">● Local only — add Sheet URL to enable sync</div>
   <nav class="nav">
     <button class="active" onclick="show('obs',this)">Observation</button>
     <button onclick="show('worker',this)">Worker feedback</button>
@@ -342,7 +343,6 @@
 </div><!-- /app -->
 
 <script>
-const SCRIPT_URL = 'https://script.google.com/a/macros/egovernments.org/s/AKfycbxRjMDoFtrBbbs9HlyiN82-WpVGWZ3tFLQlB9KB6D8yS0BXQwTaozs5RDgkRyNIVieV7w/exec';
 const OBS_CHECKLISTS = {
   Enrollment: [
     "Worker enrolled without guidance or hand-holding",
@@ -437,11 +437,40 @@ function getCheckedItems() {
     .map(el => el.querySelector('span').textContent).join(' | ');
 }
 
+const SCRIPT_URL = 'https://script.google.com/a/macros/egovernments.org/s/AKfycbxRjMDoFtrBbbs9HlyiN82-WpVGWZ3tFLQlB9KB6D8yS0BXQwTaozs5RDgkRyNIVieV7w/exec';
+
 function getData(key) {
   try { return JSON.parse(localStorage.getItem('fp_' + key) || '[]'); } catch { return []; }
 }
 function setData(key, arr) { localStorage.setItem('fp_' + key, JSON.stringify(arr)); }
 function nowStr() { return new Date().toLocaleString('en-GB', { dateStyle:'short', timeStyle:'short' }); }
+
+function pushToSheet(type, record) {
+  if (!SCRIPT_URL) return;
+  fetch(SCRIPT_URL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'text/plain' },
+    body: JSON.stringify({ type, record })
+  })
+  .then(r => r.json())
+  .then(data => {
+    const ind = document.getElementById('sync-indicator');
+    if (data.status === 'ok') {
+      ind.textContent = '● Synced to Sheet';
+      ind.style.color = '#0F6E56';
+    } else {
+      ind.textContent = '● Sync failed — saved locally';
+      ind.style.color = '#854F0B';
+    }
+    setTimeout(() => { ind.textContent = SCRIPT_URL ? '● Sheet connected' : '● Local only'; ind.style.color = SCRIPT_URL ? '#0F6E56' : '#888'; }, 3000);
+  })
+  .catch(() => {
+    const ind = document.getElementById('sync-indicator');
+    ind.textContent = '● No internet — saved locally';
+    ind.style.color = '#854F0B';
+    setTimeout(() => { ind.textContent = '● Sheet connected'; ind.style.color = '#0F6E56'; }, 3000);
+  });
+}
 
 function flash(id) {
   const el = document.getElementById(id);
@@ -463,6 +492,7 @@ function saveObs() {
     notes: document.getElementById('obs-notes').value
   };
   const arr = getData('observations'); arr.unshift(rec); setData('observations', arr);
+  pushToSheet('observations', rec);
   flash('obs-toast'); clearObs();
 }
 
@@ -490,6 +520,7 @@ function saveWorker() {
     observer_notes: document.getElementById('wf-notes').value
   };
   const arr = getData('feedback'); arr.unshift(rec); setData('feedback', arr);
+  pushToSheet('feedback', rec);
   flash('wf-toast'); clearWorker();
 }
 
@@ -514,6 +545,7 @@ function saveIssue() {
     developer_action: document.getElementById('iss-action').value
   };
   const arr = getData('issues'); arr.unshift(rec); setData('issues', arr);
+  pushToSheet('issues', rec);
   flash('iss-toast'); clearIssue();
 }
 
@@ -545,6 +577,7 @@ function saveLighting() {
     notes: document.getElementById('lt-notes').value
   };
   const arr = getData('lighting'); arr.unshift(rec); setData('lighting', arr);
+  pushToSheet('lighting', rec);
   flash('lt-toast'); clearLighting();
 }
 
@@ -635,6 +668,18 @@ function exportCSV(key) {
   const a = document.createElement('a');
   a.href = URL.createObjectURL(blob); a.download = `pilot_${key}_${new Date().toISOString().slice(0,10)}.csv`; a.click();
 }
+
+// Init
+(function() {
+  const ind = document.getElementById('sync-indicator');
+  if (SCRIPT_URL) {
+    ind.textContent = '● Sheet connected — records sync automatically';
+    ind.style.color = 'rgba(93,202,165,0.9)';
+  } else {
+    ind.textContent = '● Local only — add Script URL to index.html to enable Sheet sync';
+    ind.style.color = 'rgba(255,255,255,0.4)';
+  }
+})();
 </script>
 </body>
 </html>
