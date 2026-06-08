@@ -5,8 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="apple-mobile-web-app-title" content="Pilot Field App">
-<title>Face ID Pilot — Field App v3</title>
+<meta name="apple-mobile-web-app-title" content="Face ID Pilot">
+<title>Face ID Pilot — Field App v4</title>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
@@ -31,93 +31,129 @@
 }}
 body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:15px;color:var(--text);background:var(--bg);min-height:100vh}
 .app{max-width:600px;margin:0 auto;padding:0 0 80px}
-.header{position:sticky;top:0;z-index:100;background:var(--navy);padding:12px 16px 0}
-.header h1{font-size:15px;font-weight:600;color:#fff;margin-bottom:2px}
-.header h1 span{font-weight:400;opacity:.7;font-size:12px;margin-left:6px}
-#sync-ind{font-size:10px;margin-bottom:8px;letter-spacing:.01em}
+
+/* Header */
+.header{position:sticky;top:0;z-index:100;background:var(--navy);padding:11px 14px 0}
+.hrow{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}
+.header h1{font-size:14px;font-weight:600;color:#fff}
+.header h1 span{font-weight:400;opacity:.65;font-size:11px;margin-left:5px}
+.sync-pill{display:flex;align-items:center;gap:5px;font-size:10px;color:rgba(255,255,255,.7);background:rgba(255,255,255,.1);padding:3px 8px;border-radius:20px;cursor:pointer;white-space:nowrap}
+.sync-pill .dot{width:6px;height:6px;border-radius:50%;background:#5DCAA5;flex-shrink:0}
+.sync-pill .dot.warn{background:#F5A623}
+.sync-pill .dot.off{background:#888}
 .nav{display:flex;gap:0;overflow-x:auto;scrollbar-width:none}
 .nav::-webkit-scrollbar{display:none}
-.nav button{flex-shrink:0;padding:8px 10px;font-size:11.5px;font-weight:500;background:transparent;border:none;color:rgba(255,255,255,0.55);cursor:pointer;border-bottom:3px solid transparent;white-space:nowrap;transition:all .15s}
+.nav button{flex-shrink:0;padding:8px 12px;font-size:12px;font-weight:500;background:transparent;border:none;color:rgba(255,255,255,.5);cursor:pointer;border-bottom:3px solid transparent;white-space:nowrap;transition:all .15s}
 .nav button.active{color:#fff;border-bottom-color:#5DCAA5}
-.content{padding:14px}
+
+/* Content */
+.content{padding:13px}
 .screen{display:none}.screen.active{display:block}
-.section{background:var(--bg-2);border-radius:var(--rl);padding:13px 14px;margin-bottom:10px;border:.5px solid var(--border)}
-.stitle{font-size:10px;font-weight:700;color:var(--text-3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px}
-.field{margin-bottom:12px}.field:last-child{margin-bottom:0}
+.section{background:var(--bg-2);border-radius:var(--rl);padding:12px 14px;margin-bottom:10px;border:.5px solid var(--border)}
+.stitle{font-size:10px;font-weight:700;color:var(--text-3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:9px}
+.field{margin-bottom:11px}.field:last-child{margin-bottom:0}
 .field label{display:block;font-size:13px;font-weight:500;color:var(--text);margin-bottom:4px;line-height:1.4}
 .req{color:var(--red);margin-left:2px}
 .hint{font-size:10px;color:var(--text-3);margin-top:2px}
-/* Nested conditional block */
-.nested{margin-top:8px;padding:10px 12px;background:var(--bg-3);border-left:3px solid var(--blue);border-radius:0 var(--r) var(--r) 0;display:none}
-.nested.show{display:block}
-.nested .stitle{color:var(--blue);font-size:9px}
-.nested-red{border-left-color:var(--red)}
-.nested-red .stitle{color:var(--red)}
-.nested-amber{border-left-color:var(--amber)}
-.nested-amber .stitle{color:var(--amber)}
-.nested-teal{border-left-color:var(--teal)}
-.nested-teal .stitle{color:var(--teal)}
+
+/* Inputs */
 input[type=text],input[type=number],select,textarea{width:100%;padding:9px 11px;font-size:14px;border:1px solid var(--border-2);border-radius:var(--r);background:var(--bg);color:var(--text);font-family:inherit;transition:border-color .15s}
-input:focus,select:focus,textarea:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 3px rgba(44,117,182,.12)}
-textarea{min-height:70px;resize:vertical}
-select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24'%3E%3Cpath fill='%23888' d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 11px center;padding-right:30px}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 3px rgba(44,117,182,.1)}
+textarea{min-height:68px;resize:vertical}
+select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24'%3E%3Cpath fill='%23888' d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center;padding-right:28px}
+
+/* User type toggle */
+.utype-row{display:flex;gap:6px;margin-bottom:12px}
+.utype-btn{flex:1;padding:9px 8px;text-align:center;font-size:13px;font-weight:500;border:1.5px solid var(--border-2);border-radius:var(--r);background:var(--bg);color:var(--text-2);cursor:pointer;transition:all .15s}
+.utype-btn.active-sys{background:var(--blue-p);border-color:var(--blue);color:var(--navy)}
+.utype-btn.active-hlp{background:var(--purple-l);border-color:var(--purple);color:var(--purple)}
+
+/* Radio / checkbox */
 .rg,.cg{display:flex;flex-direction:column;gap:5px}
-.ri,.ci{display:flex;align-items:flex-start;gap:9px;padding:9px 11px;background:var(--bg);border:1px solid var(--border);border-radius:var(--r);cursor:pointer;transition:all .12s}
+.ri,.ci{display:flex;align-items:flex-start;gap:9px;padding:8px 11px;background:var(--bg);border:1px solid var(--border);border-radius:var(--r);cursor:pointer;transition:all .12s}
 .ri input,.ci input{margin-top:2px;flex-shrink:0;width:16px;height:16px;cursor:pointer;accent-color:var(--navy)}
 .ri span,.ci span{font-size:13px;line-height:1.5;color:var(--text)}
 .ri.sel{background:var(--blue-p);border-color:var(--blue)}.ri.sel span{color:var(--navy)}
 .ci.chk{background:var(--teal-l);border-color:var(--teal)}.ci.chk span{color:var(--teal)}
+
+/* Scale */
 .scale-row{display:flex;gap:5px}
 .sb{flex:1;padding:7px 3px;text-align:center;font-size:11px;line-height:1.3;border:1px solid var(--border-2);border-radius:var(--r);background:var(--bg);color:var(--text-2);cursor:pointer;transition:all .12s}
 .sb.sel{background:var(--navy);color:#fff;border-color:var(--navy)}
+
+/* Nested */
+.nested{margin-top:7px;padding:9px 11px;background:var(--bg-3);border-left:3px solid var(--blue);border-radius:0 var(--r) var(--r) 0;display:none}
+.nested.show{display:block}
+.nested .stitle{color:var(--blue);font-size:9px}
+.nested-amber{border-left-color:var(--amber)}.nested-amber .stitle{color:var(--amber)}
+.nested-red{border-left-color:var(--red)}.nested-red .stitle{color:var(--red)}
+.nested-teal{border-left-color:var(--teal)}.nested-teal .stitle{color:var(--teal)}
+
+/* Buttons */
 .btn-p{width:100%;padding:12px;background:var(--teal);color:#fff;border:none;border-radius:var(--rl);font-size:15px;font-weight:600;cursor:pointer;margin-top:4px;transition:background .15s}
 .btn-p:hover{background:#085041}.btn-p:active{transform:scale(.99)}
 .btn-s{width:100%;padding:9px;background:transparent;color:var(--text-2);border:1px solid var(--border-2);border-radius:var(--rl);font-size:13px;cursor:pointer;margin-top:7px}
-.toast{display:none;padding:10px 13px;background:var(--teal-l);border:1px solid var(--teal);border-radius:var(--r);color:var(--teal);font-size:13px;font-weight:500;margin-bottom:12px}
+
+/* Toast */
+.toast{display:none;padding:10px 13px;background:var(--teal-l);border:1px solid var(--teal);border-radius:var(--r);color:var(--teal);font-size:13px;font-weight:500;margin-bottom:11px}
 .toast.show{display:flex;align-items:center;gap:7px}
-.stats-row{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:14px}
-.stat-box{background:var(--bg-2);border:.5px solid var(--border);border-radius:var(--rl);padding:12px;text-align:center}
-.stat-box .n{font-size:26px;font-weight:600}.stat-box .l{font-size:10px;color:var(--text-3);margin-top:2px}
-.exp-row{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-bottom:14px}
-.eb{padding:9px 7px;background:var(--bg-2);border:1px solid var(--border-2);border-radius:var(--r);font-size:11px;font-weight:500;cursor:pointer;color:var(--text);text-align:center}
+
+/* Info box */
+.info-box{padding:8px 12px;background:var(--blue-p);border:1px solid var(--blue-l);border-radius:var(--r);font-size:12px;color:var(--navy);margin-bottom:10px;line-height:1.5}
+
+/* Records */
+.stats-row{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-bottom:13px}
+.stat-box{background:var(--bg-2);border:.5px solid var(--border);border-radius:var(--rl);padding:11px;text-align:center}
+.stat-box .n{font-size:24px;font-weight:600}.stat-box .l{font-size:10px;color:var(--text-3);margin-top:2px}
+.sync-summary{background:var(--bg-2);border:.5px solid var(--border);border-radius:var(--rl);padding:12px 14px;margin-bottom:13px}
+.sync-summary .sh{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+.sync-summary .st{font-size:12px;font-weight:600;color:var(--text)}
+.sync-bar-wrap{background:var(--bg-3);border-radius:4px;height:6px;overflow:hidden;margin-bottom:6px}
+.sync-bar{height:6px;background:var(--teal);border-radius:4px;transition:width .4s}
+.sync-detail{font-size:11px;color:var(--text-3)}
+.force-sync-btn{padding:7px 14px;background:var(--teal);color:#fff;border:none;border-radius:var(--r);font-size:12px;font-weight:500;cursor:pointer}
+.exp-row{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-bottom:13px}
+.eb{padding:8px 7px;background:var(--bg-2);border:1px solid var(--border-2);border-radius:var(--r);font-size:11px;font-weight:500;cursor:pointer;color:var(--text);text-align:center}
 .eb:hover{background:var(--bg-3)}
-.rc{background:var(--bg-2);border:.5px solid var(--border);border-radius:var(--rl);padding:11px 13px;margin-bottom:7px}
-.rc-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:5px;gap:7px}
-.rc-left{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.rc{background:var(--bg-2);border:.5px solid var(--border);border-radius:var(--rl);padding:10px 12px;margin-bottom:7px}
+.rc-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:4px;gap:6px}
+.rc-left{display:flex;align-items:center;gap:5px;flex-wrap:wrap}
 .badge{display:inline-block;padding:2px 7px;border-radius:20px;font-size:10px;font-weight:500}
-.b-obs{background:var(--blue-p);color:var(--navy)}
+.b-sys{background:var(--blue-p);color:var(--navy)}
+.b-hlp{background:var(--purple-l);color:var(--purple)}
+.b-enr{background:var(--green-l);color:var(--green-d)}
 .b-wf{background:var(--teal-l);color:var(--teal)}
-.b-iss{background:var(--red-l);color:var(--red)}
-.b-rat{background:#F0E6FF;color:var(--purple)}
-.b-he{background:var(--purple-l);color:var(--purple)}
-.b-hd{background:var(--green-l);color:var(--green-d)}
 .b-am{background:var(--orange-l);color:var(--orange)}
+.b-rat{background:#F0E6FF;color:var(--purple)}
+.b-iss{background:var(--red-l);color:var(--red)}
+.sync-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;display:inline-block}
+.synced{background:#5DCAA5}.pending{background:#F5A623}.failed{background:var(--red)}
 .rc-w{font-size:12px;font-weight:500}
 .rc-t{font-size:10px;color:var(--text-3);white-space:nowrap}
 .del-btn{font-size:10px;color:var(--red);background:none;border:none;cursor:pointer;padding:2px 5px;border-radius:3px}
 .day-b{display:inline-block;font-size:10px;background:var(--gray-l);color:var(--gray);padding:1px 6px;border-radius:20px}
 .filter-row{display:flex;gap:7px;margin-bottom:10px}
 .filter-row select{flex:1}
-.empty-state{text-align:center;color:var(--text-3);font-size:13px;padding:36px 16px}
+.empty-state{text-align:center;color:var(--text-3);font-size:13px;padding:32px 14px}
 .sev-h{background:var(--red-l);color:var(--red);padding:1px 6px;border-radius:20px;font-size:10px;font-weight:500}
 .sev-m{background:var(--amber-l);color:var(--amber);padding:1px 6px;border-radius:20px;font-size:10px;font-weight:500}
 .sev-l{background:var(--green-l);color:var(--green-d);padding:1px 6px;border-radius:20px;font-size:10px;font-weight:500}
 .flag-warn{color:var(--red);font-weight:600}
-.retry-bar{display:none;padding:8px 13px;background:var(--amber-l);border:1px solid #E8A020;border-radius:var(--r);font-size:12px;color:var(--amber);margin-bottom:10px}
-.retry-bar.show{display:flex;align-items:center;gap:8px;justify-content:space-between}
-.info-box{padding:9px 12px;background:var(--blue-p);border:1px solid var(--blue-l);border-radius:var(--r);font-size:12px;color:var(--navy);margin-bottom:10px;line-height:1.5}
 </style>
 </head>
 <body>
 <div class="app">
 <div class="header">
-  <h1>Face ID Pilot <span>Abuja — v3</span></h1>
-  <div id="sync-ind" style="color:rgba(255,255,255,0.45)">● checking…</div>
+  <div class="hrow">
+    <h1>Face ID Pilot <span>Abuja v4</span></h1>
+    <div class="sync-pill" onclick="show('records',document.querySelector('.nav button:last-child'))">
+      <span class="dot" id="sync-dot"></span>
+      <span id="sync-text">checking…</span>
+    </div>
+  </div>
   <nav class="nav">
     <button class="active" onclick="show('obs',this)">Observation</button>
     <button onclick="show('worker',this)">Worker feedback</button>
-    <button onclick="show('helper-e',this)">Helper enroll</button>
-    <button onclick="show('helper-d',this)">Helper daily</button>
     <button onclick="show('am',this)">Att. marker</button>
     <button onclick="show('rat',this)">Recog. accuracy</button>
     <button onclick="show('issue',this)">Issues</button>
@@ -127,143 +163,249 @@ select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='ht
 
 <div class="content">
 
-<!-- ══════════════════════════════════════════════════════════════════════
-     OBSERVATION — SYSTEM USER
-════════════════════════════════════════════════════════════════════════ -->
+<!-- ══ OBSERVATION ══════════════════════════════════════════════════════ -->
 <div id="obs" class="screen active">
-  <div id="obs-toast" class="toast">✓ Observation saved</div>
-  <div id="obs-retry" class="retry-bar">⚠ <span id="obs-retry-n">0</span> unsynced <button onclick="retryQueue()" style="font-size:11px;border:none;background:var(--amber);color:#fff;padding:2px 8px;border-radius:4px;cursor:pointer;margin-left:6px">Sync now</button></div>
+  <div id="obs-toast" class="toast">✓ Saved</div>
 
+  <!-- User type toggle -->
   <div class="section">
-    <div class="stitle">Session context</div>
-    <div class="field"><label>Worker ID / name <span class="req">*</span></label><input type="text" id="obs-worker" placeholder="e.g. W01 — Amara"></div>
-    <div class="field"><label>Day # <span class="req">*</span></label><input type="number" id="obs-day" min="1" max="10" placeholder="1–10"></div>
-    <div class="field"><label>Session type <span class="req">*</span></label>
-      <div class="rg" id="obs-type-grp">
-        <label class="ri"><input type="radio" name="obs-type" value="Enrollment" onchange="buildChecklist('Enrollment')"><span>Enrollment</span></label>
-        <label class="ri"><input type="radio" name="obs-type" value="Morning login" onchange="buildChecklist('Morning login')"><span>Morning login</span></label>
-        <label class="ri"><input type="radio" name="obs-type" value="Re-verification" onchange="buildChecklist('Re-verification')"><span>Re-verification prompt</span></label>
+    <div class="stitle">Who are you observing?</div>
+    <div class="utype-row">
+      <button class="utype-btn active-sys" id="btn-sys" onclick="setUtype('sys')">System user</button>
+      <button class="utype-btn" id="btn-hlp" onclick="setUtype('hlp')">Helper</button>
+      <button class="utype-btn" id="btn-enr" onclick="setUtype('enr')">Helper enrollment</button>
+    </div>
+
+    <!-- System user / Helper shared context -->
+    <div id="ctx-sys-hlp">
+      <div class="field"><label>Worker / Helper ID <span class="req">*</span></label><input type="text" id="obs-worker" placeholder="e.g. W01 or H01"></div>
+      <div id="paired-with-field" class="field" style="display:none"><label>System user paired with</label><input type="text" id="obs-paired" placeholder="e.g. W01 — Amara"></div>
+      <div class="field"><label>Day # <span class="req">*</span></label><input type="number" id="obs-day" min="1" max="4" placeholder="1–4"></div>
+      <div class="field"><label>Session type <span class="req">*</span></label>
+        <div class="rg" id="obs-type-grp">
+          <label class="ri"><input type="radio" name="obs-type" value="Morning login" onchange="buildChecklist()"><span>Morning login</span></label>
+          <label class="ri"><input type="radio" name="obs-type" value="Re-verification" onchange="buildChecklist()"><span>Re-verification prompt</span></label>
+        </div>
+      </div>
+      <div class="field"><label>Lighting condition</label>
+        <select id="obs-lighting">
+          <option value="">Select…</option>
+          <option>Indoor — dim</option><option>Indoor — bright fluorescent</option>
+          <option>Outdoor — shade</option><option>Outdoor — direct sun</option>
+        </select>
       </div>
     </div>
-    <div class="field"><label>Lighting condition</label>
-      <select id="obs-lighting">
+
+    <!-- Helper enrollment context -->
+    <div id="ctx-enr" style="display:none">
+      <div class="field"><label>Helper ID <span class="req">*</span></label><input type="text" id="enr-name" placeholder="e.g. H01 — Fatima"></div>
+      <div class="field"><label>System user paired with <span class="req">*</span></label><input type="text" id="enr-sysuser" placeholder="e.g. W01 — Amara"></div>
+      <div class="field"><label>Day # <span class="req">*</span></label><input type="number" id="enr-day" min="1" max="4" placeholder="1–4"></div>
+      <div class="field"><label>Helper # on this device</label>
+        <div class="rg" id="enr-num-grp">
+          <label class="ri"><input type="radio" name="enr-num" value="1st"><span>1st helper on this device</span></label>
+          <label class="ri"><input type="radio" name="enr-num" value="2nd"><span>2nd helper on this device</span></label>
+          <label class="ri"><input type="radio" name="enr-num" value="3rd"><span>3rd helper on this device</span></label>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Checklist (sys/hlp only) -->
+  <div class="section" id="obs-checklist-section">
+    <div class="stitle">Checklist</div>
+    <div class="cg" id="obs-checks"><p style="font-size:13px;color:var(--text-3)">Select session type above.</p></div>
+  </div>
+
+  <!-- Helper enrollment fields -->
+  <div class="section" id="enr-section" style="display:none">
+    <div class="stitle">Enrollment observation</div>
+    <div class="field"><label>Enrollment attempt</label>
+      <div class="rg" id="enr-attempt-grp">
+        <label class="ri"><input type="radio" name="enr-attempt" value="1st — succeeded" onchange="syncR('enr-attempt-grp','enr-attempt');nest('nest-enr-retry',false)"><span>1st attempt — succeeded</span></label>
+        <label class="ri"><input type="radio" name="enr-attempt" value="2nd — re-enrollment" onchange="syncR('enr-attempt-grp','enr-attempt');nest('nest-enr-retry',true)"><span>2nd attempt — re-enrollment needed</span></label>
+        <label class="ri"><input type="radio" name="enr-attempt" value="3rd — re-enrollment again" onchange="syncR('enr-attempt-grp','enr-attempt');nest('nest-enr-retry',true)"><span>3rd attempt — re-enrollment again</span></label>
+      </div>
+      <div class="nested nested-amber" id="nest-enr-retry">
+        <div class="stitle">Why did first attempt fail?</div>
+        <div class="rg" id="enr-fail-grp">
+          <label class="ri"><input type="radio" name="enr-fail" value="Poor lighting"><span>Poor lighting</span></label>
+          <label class="ri"><input type="radio" name="enr-fail" value="Skin tone / liveness detection"><span>Skin tone / liveness detection</span></label>
+          <label class="ri"><input type="radio" name="enr-fail" value="Camera glitch"><span>Camera glitch</span></label>
+          <label class="ri"><input type="radio" name="enr-fail" value="Face positioning"><span>Face positioning</span></label>
+          <label class="ri"><input type="radio" name="enr-fail" value="Glasses / head covering"><span>Glasses / head covering</span></label>
+          <label class="ri"><input type="radio" name="enr-fail" value="Unknown"><span>Unknown</span></label>
+        </div>
+      </div>
+    </div>
+    <div class="field"><label>Liveness check result</label>
+      <div class="rg" id="enr-live-grp">
+        <label class="ri"><input type="radio" name="enr-live" value="Passed"><span>Passed</span></label>
+        <label class="ri"><input type="radio" name="enr-live" value="Passed after retry"><span>Passed after retry</span></label>
+        <label class="ri"><input type="radio" name="enr-live" value="Failed — supervisor needed"><span>Failed — supervisor needed</span></label>
+      </div>
+    </div>
+    <div class="field"><label>Fitzpatrick skin tone (observer estimate)</label>
+      <div class="rg" id="enr-fitz-grp">
+        <label class="ri"><input type="radio" name="enr-fitz" value="I–III (light)"><span>I–III — light</span></label>
+        <label class="ri"><input type="radio" name="enr-fitz" value="IV (medium-brown)"><span>IV — medium-brown</span></label>
+        <label class="ri"><input type="radio" name="enr-fitz" value="V (dark-brown)"><span>V — dark-brown</span></label>
+        <label class="ri"><input type="radio" name="enr-fitz" value="VI (deeply dark)"><span>VI — deeply dark</span></label>
+      </div>
+    </div>
+    <div class="field"><label>Profile visible in My Team panel?</label>
+      <div class="rg" id="enr-profile-grp">
+        <label class="ri"><input type="radio" name="enr-profile" value="Yes"><span>Yes — visible</span></label>
+        <label class="ri"><input type="radio" name="enr-profile" value="No"><span>No — not visible</span></label>
+        <label class="ri"><input type="radio" name="enr-profile" value="Could not verify"><span>Could not verify</span></label>
+      </div>
+    </div>
+    <div class="field"><label>Any profile confusion with system user?</label>
+      <div class="rg" id="enr-confusion-grp">
+        <label class="ri"><input type="radio" name="enr-confusion" value="No"><span>No confusion</span></label>
+        <label class="ri"><input type="radio" name="enr-confusion" value="Minor — resolved"><span>Minor — resolved quickly</span></label>
+        <label class="ri"><input type="radio" name="enr-confusion" value="Significant"><span>Significant confusion</span></label>
+      </div>
+    </div>
+    <div class="field"><label>Lighting at enrollment</label>
+      <select id="enr-lighting">
         <option value="">Select…</option>
         <option>Indoor — dim</option><option>Indoor — bright fluorescent</option>
         <option>Outdoor — shade</option><option>Outdoor — direct sun</option>
       </select>
     </div>
+    <div class="field"><label>Time taken (seconds)</label><input type="number" id="enr-time" min="0" placeholder="e.g. 90"></div>
   </div>
 
-  <div class="section">
-    <div class="stitle">Checklist</div>
-    <div class="cg" id="obs-checks"><p style="font-size:13px;color:var(--text-3)">Select session type above.</p></div>
-  </div>
-
-  <div class="section">
+  <!-- Outcome (sys/hlp) -->
+  <div class="section" id="obs-outcome-section">
     <div class="stitle">Outcome</div>
-
     <div class="field"><label>Face scan result <span class="req">*</span></label>
       <div class="rg" id="obs-result-grp">
         <label class="ri"><input type="radio" name="obs-result" value="PASS — 1st attempt" onchange="obsResultChange(this)"><span>PASS — 1st attempt</span></label>
-        <label class="ri"><input type="radio" name="obs-result" value="PASS — after retry" onchange="obsResultChange(this)"><span>PASS — after retry (2nd or 3rd)</span></label>
-        <label class="ri"><input type="radio" name="obs-result" value="PIN fallback used" onchange="obsResultChange(this)"><span>PIN fallback used</span></label>
-        <label class="ri"><input type="radio" name="obs-result" value="Prompt ignored / expired" onchange="obsResultChange(this)"><span>Prompt ignored / expired</span></label>
-        <label class="ri"><input type="radio" name="obs-result" value="N/A" onchange="obsResultChange(this)"><span>N/A</span></label>
+        <label class="ri"><input type="radio" name="obs-result" value="PASS — after retry" onchange="obsResultChange(this)"><span>PASS — after retry</span></label>
+        <label class="ri"><input type="radio" name="obs-result" value="PIN fallback used" onchange="obsResultChange(this)" id="pin-opt"><span>PIN fallback used</span></label>
+        <label class="ri"><input type="radio" name="obs-result" value="Prompt expired" onchange="obsResultChange(this)"><span>Prompt expired / ignored</span></label>
       </div>
-
-      <!-- Nested: retry details -->
+      <!-- Nested: retry -->
       <div class="nested nested-amber" id="nest-retry">
         <div class="stitle">Retry details</div>
-        <div class="field"><label>Number of attempts before pass</label>
+        <div class="field"><label>Attempts before pass</label>
           <div class="rg" id="obs-attempts-grp">
             <label class="ri"><input type="radio" name="obs-attempts" value="2"><span>2 attempts</span></label>
             <label class="ri"><input type="radio" name="obs-attempts" value="3"><span>3 attempts</span></label>
           </div>
         </div>
-        <div class="field"><label>Likely reason for initial failure</label>
+        <div class="field"><label>Likely failure reason</label>
           <div class="rg" id="obs-fail-reason-grp">
             <label class="ri"><input type="radio" name="obs-fail-reason" value="Poor lighting"><span>Poor lighting</span></label>
             <label class="ri"><input type="radio" name="obs-fail-reason" value="Skin tone / model accuracy"><span>Skin tone / model accuracy</span></label>
             <label class="ri"><input type="radio" name="obs-fail-reason" value="Camera glitch or lag"><span>Camera glitch or lag</span></label>
-            <label class="ri"><input type="radio" name="obs-fail-reason" value="Worker face positioning"><span>Worker face positioning</span></label>
+            <label class="ri"><input type="radio" name="obs-fail-reason" value="Face positioning"><span>Face positioning</span></label>
             <label class="ri"><input type="radio" name="obs-fail-reason" value="Glasses / head covering"><span>Glasses / head covering</span></label>
-            <label class="ri"><input type="radio" name="obs-fail-reason" value="Unknown — passed on retry"><span>Unknown — just passed on retry</span></label>
+            <label class="ri"><input type="radio" name="obs-fail-reason" value="Unknown"><span>Unknown</span></label>
           </div>
         </div>
       </div>
-
-      <!-- Nested: PIN fallback details -->
+      <!-- Nested: PIN (system user only) -->
       <div class="nested nested-red" id="nest-pin">
         <div class="stitle">PIN fallback details</div>
-        <div class="field"><label>Number of face attempts before PIN offered</label>
+        <div class="field"><label>Attempts before PIN offered</label>
           <div class="rg" id="obs-pin-attempts-grp">
             <label class="ri"><input type="radio" name="obs-pin-attempts" value="1"><span>1 attempt</span></label>
             <label class="ri"><input type="radio" name="obs-pin-attempts" value="2"><span>2 attempts</span></label>
-            <label class="ri"><input type="radio" name="obs-pin-attempts" value="3 — max reached"><span>3 — max reached, PIN offered</span></label>
+            <label class="ri"><input type="radio" name="obs-pin-attempts" value="3 — max reached"><span>3 — max reached</span></label>
           </div>
         </div>
-        <div class="field"><label>Reason face failed</label>
+        <div class="field"><label>Failure reason</label>
           <div class="rg" id="obs-pin-reason-grp">
             <label class="ri"><input type="radio" name="obs-pin-reason" value="Poor lighting"><span>Poor lighting</span></label>
             <label class="ri"><input type="radio" name="obs-pin-reason" value="Skin tone / model accuracy"><span>Skin tone / model accuracy</span></label>
-            <label class="ri"><input type="radio" name="obs-pin-reason" value="Camera glitch or lag"><span>Camera glitch or lag</span></label>
-            <label class="ri"><input type="radio" name="obs-pin-reason" value="Worker face positioning"><span>Worker face positioning</span></label>
-            <label class="ri"><input type="radio" name="obs-pin-reason" value="Worker chose PIN directly"><span>Worker chose PIN directly (skipped face)</span></label>
+            <label class="ri"><input type="radio" name="obs-pin-reason" value="Camera glitch"><span>Camera glitch</span></label>
+            <label class="ri"><input type="radio" name="obs-pin-reason" value="Worker chose PIN directly"><span>Worker chose PIN directly</span></label>
             <label class="ri"><input type="radio" name="obs-pin-reason" value="Unknown"><span>Unknown</span></label>
           </div>
         </div>
-        <div class="field"><label>Did worker remember PIN quickly?</label>
+        <div class="field"><label>Did worker remember PIN?</label>
           <div class="rg" id="obs-pin-mem-grp">
-            <label class="ri"><input type="radio" name="obs-pin-mem" value="Yes — entered immediately"><span>Yes — entered immediately</span></label>
+            <label class="ri"><input type="radio" name="obs-pin-mem" value="Yes — immediately"><span>Yes — immediately</span></label>
             <label class="ri"><input type="radio" name="obs-pin-mem" value="Yes — after hesitation"><span>Yes — after hesitation</span></label>
-            <label class="ri"><input type="radio" name="obs-pin-mem" value="No — needed to look it up"><span>No — needed to look it up</span></label>
+            <label class="ri"><input type="radio" name="obs-pin-mem" value="No — needed help"><span>No — needed help</span></label>
           </div>
         </div>
       </div>
+    </div>
 
-    </div><!-- /result field -->
+    <!-- Helper-specific fields (shown when helper) -->
+    <div id="helper-scan-fields" style="display:none">
+      <div class="field"><label>Scan initiated via</label>
+        <div class="rg" id="hd-init-grp">
+          <label class="ri"><input type="radio" name="hd-init" value="Via ticker — helper held device"><span>Via ticker — helper held device</span></label>
+          <label class="ri"><input type="radio" name="hd-init" value="Via hamburger → My Team"><span>Via hamburger menu → My Team</span></label>
+          <label class="ri"><input type="radio" name="hd-init" value="System user completed on behalf"><span>System user completed on helper's behalf</span></label>
+        </div>
+      </div>
+      <div class="field"><label>Helper physically present?</label>
+        <div class="rg" id="hd-present-grp">
+          <label class="ri"><input type="radio" name="hd-present" value="Yes — scanned themselves"><span>Yes — present and scanned themselves</span></label>
+          <label class="ri"><input type="radio" name="hd-present" value="Absent — system user handled"><span>Absent — system user handled it</span></label>
+          <label class="ri"><input type="radio" name="hd-present" value="Could not observe"><span>Could not observe</span></label>
+        </div>
+      </div>
+      <div class="field"><label>Any profile mix-up?</label>
+        <div class="rg" id="hd-mixup-grp">
+          <label class="ri"><input type="radio" name="hd-mixup" value="No"><span>No</span></label>
+          <label class="ri"><input type="radio" name="hd-mixup" value="Yes — wrong profile scanned"><span>Yes — wrong profile scanned</span></label>
+          <label class="ri"><input type="radio" name="hd-mixup" value="Unclear"><span>Unclear</span></label>
+        </div>
+      </div>
+    </div>
 
     <div class="field"><label>Confidence score from API (optional)</label>
       <input type="number" id="obs-conf" step="0.001" min="0" max="1" placeholder="e.g. 0.834">
-      <div class="hint">Pull from Attendance Log after session. Flag anything below 0.75.</div>
+      <div class="hint">Pull from Attendance Log after session. Flag if below 0.75.</div>
     </div>
     <div class="field"><label>Time taken (seconds) <span class="req">*</span></label><input type="number" id="obs-time" min="0" placeholder="e.g. 18"></div>
     <div class="field"><label>Attendance event confirmed in app?</label>
       <div class="rg" id="att-conf-grp">
-        <label class="ri"><input type="radio" name="att-conf" value="Yes — confirmation shown"><span>Yes — confirmation shown</span></label>
-        <label class="ri"><input type="radio" name="att-conf" value="No — nothing shown"><span>No — nothing shown</span></label>
+        <label class="ri"><input type="radio" name="att-conf" value="Yes"><span>Yes — confirmation shown</span></label>
+        <label class="ri"><input type="radio" name="att-conf" value="No"><span>No — nothing shown</span></label>
         <label class="ri"><input type="radio" name="att-conf" value="Could not observe"><span>Could not observe</span></label>
       </div>
     </div>
     <div class="field"><label>App crash or freeze?</label>
       <div class="rg" id="crash-grp">
         <label class="ri"><input type="radio" name="crash" value="No"><span>No</span></label>
-        <label class="ri"><input type="radio" name="crash" value="Yes — brief freeze"><span>Yes — brief freeze</span></label>
-        <label class="ri"><input type="radio" name="crash" value="Yes — full crash"><span>Yes — full crash</span></label>
+        <label class="ri"><input type="radio" name="crash" value="Brief freeze"><span>Yes — brief freeze</span></label>
+        <label class="ri"><input type="radio" name="crash" value="Full crash"><span>Yes — full crash</span></label>
       </div>
     </div>
     <div class="field"><label>Worker reaction</label>
       <select id="obs-reaction">
         <option value="">Select…</option>
         <option>Calm and confident</option><option>Slightly confused</option>
-        <option>Needed help to proceed</option><option>Frustrated</option><option>Unaware of prompt</option>
+        <option>Needed help</option><option>Frustrated</option><option>Unaware of prompt</option>
       </select>
     </div>
     <div class="field"><label>Observer notes</label><textarea id="obs-notes" placeholder="What did you see? Quote worker if possible."></textarea></div>
   </div>
+
+  <!-- Enrollment notes -->
+  <div class="section" id="enr-notes-section" style="display:none">
+    <div class="field"><label>Observer notes</label><textarea id="enr-notes" placeholder="Any issues or notable moments…"></textarea></div>
+  </div>
+
   <button class="btn-p" onclick="saveObs()">Save observation</button>
-  <button class="btn-s" onclick="clearForm('obs')">Clear</button>
+  <button class="btn-s" onclick="clearObs()">Clear</button>
 </div>
 
-<!-- ══════════════════════════════════════════════════════════════════════
-     WORKER FEEDBACK
-════════════════════════════════════════════════════════════════════════ -->
+<!-- ══ WORKER FEEDBACK ═══════════════════════════════════════════════════ -->
 <div id="worker" class="screen">
   <div id="wf-toast" class="toast">✓ Feedback saved</div>
   <div class="section">
     <div class="stitle">Worker details</div>
     <div class="field"><label>Worker ID / name <span class="req">*</span></label><input type="text" id="wf-worker" placeholder="e.g. W01 — Amara"></div>
-    <div class="field"><label>Day # <span class="req">*</span></label><input type="number" id="wf-day" min="1" max="10" placeholder="1–10"></div>
+    <div class="field"><label>Day # <span class="req">*</span></label><input type="number" id="wf-day" min="1" max="4" placeholder="1–4"></div>
     <div class="field"><label>Administered by</label><input type="text" id="wf-pm" placeholder="PM name"></div>
   </div>
   <div class="section">
@@ -272,10 +414,10 @@ select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='ht
     <div class="field"><label>Q2. Did the app ask you to use a PIN instead of your face? What happened?</label><textarea id="wf-q2" placeholder="Worker's response…"></textarea></div>
     <div class="field"><label>Q3. Did the re-verification pop-up interrupt your work? What were you doing when it appeared?</label><textarea id="wf-q3" placeholder="Worker's response…"></textarea></div>
     <div class="field"><label>Q4. Did anything confuse you or feel difficult today?</label><textarea id="wf-q4" placeholder="Worker's response…"></textarea></div>
-    <div class="field"><label>Q5. If you used this every day for a full campaign, what is the one thing you would change?</label><textarea id="wf-q5" placeholder="Worker's response…"></textarea></div>
+    <div class="field"><label>Q5. If you used this every day for a full campaign, what one thing would you change?</label><textarea id="wf-q5" placeholder="Worker's response…"></textarea></div>
     <div class="field"><label>Q6. Did the worker express any concern about their face being scanned or stored?</label>
       <div class="rg" id="wf-privacy-grp">
-        <label class="ri"><input type="radio" name="wf-privacy" value="No concern expressed"><span>No concern expressed</span></label>
+        <label class="ri"><input type="radio" name="wf-privacy" value="No concern"><span>No concern expressed</span></label>
         <label class="ri"><input type="radio" name="wf-privacy" value="Mild — asked a question"><span>Mild — asked a question</span></label>
         <label class="ri"><input type="radio" name="wf-privacy" value="Strong — needed reassurance"><span>Strong — needed reassurance</span></label>
         <label class="ri"><input type="radio" name="wf-privacy" value="Refused face scan"><span>Refused face scan</span></label>
@@ -299,325 +441,110 @@ select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='ht
   <button class="btn-s" onclick="clearForm('worker')">Clear</button>
 </div>
 
-<!-- ══════════════════════════════════════════════════════════════════════
-     HELPER ENROLLMENT
-════════════════════════════════════════════════════════════════════════ -->
-<div id="helper-e" class="screen">
-  <div id="he-toast" class="toast">✓ Helper enrollment saved</div>
-  <div class="info-box">ℹ Helpers have no HCM account and no PIN fallback. If liveness fails 3 times, enrollment is blocked and supervisor must intervene.</div>
-  <div class="section">
-    <div class="stitle">Helper details</div>
-    <div class="field"><label>Helper name / ID <span class="req">*</span></label><input type="text" id="he-name" placeholder="e.g. H01 — Fatima"></div>
-    <div class="field"><label>System user they are paired with <span class="req">*</span></label><input type="text" id="he-sysuser" placeholder="e.g. W01 — Amara"></div>
-    <div class="field"><label>Day # <span class="req">*</span></label><input type="number" id="he-day" min="1" max="10" placeholder="1–10"></div>
-    <div class="field"><label>Helper # on this device</label>
-      <div class="rg" id="he-num-grp">
-        <label class="ri"><input type="radio" name="he-num" value="1st"><span>1st helper on this device</span></label>
-        <label class="ri"><input type="radio" name="he-num" value="2nd"><span>2nd helper on this device</span></label>
-        <label class="ri"><input type="radio" name="he-num" value="3rd"><span>3rd helper on this device</span></label>
-      </div>
-    </div>
-  </div>
-  <div class="section">
-    <div class="stitle">Enrollment observation</div>
-    <div class="field"><label>Enrollment attempt number</label>
-      <div class="rg" id="he-attempt-grp">
-        <label class="ri"><input type="radio" name="he-attempt" value="1st attempt" onchange="heAttemptChange(this)"><span>1st attempt — succeeded</span></label>
-        <label class="ri"><input type="radio" name="he-attempt" value="2nd attempt — re-enrollment" onchange="heAttemptChange(this)"><span>2nd attempt — re-enrollment needed</span></label>
-        <label class="ri"><input type="radio" name="he-attempt" value="3rd attempt — re-enrollment again" onchange="heAttemptChange(this)"><span>3rd attempt — re-enrollment again</span></label>
-        <label class="ri"><input type="radio" name="he-attempt" value="Blocked after 3 fails" onchange="heAttemptChange(this)"><span>Blocked — failed all 3, supervisor needed</span></label>
-      </div>
-      <!-- Nested: re-enrollment reason -->
-      <div class="nested nested-amber" id="nest-he-retry">
-        <div class="stitle">Why did first attempt fail?</div>
-        <div class="rg" id="he-fail-grp">
-          <label class="ri"><input type="radio" name="he-fail" value="Poor lighting"><span>Poor lighting</span></label>
-          <label class="ri"><input type="radio" name="he-fail" value="Skin tone / liveness detection"><span>Skin tone / liveness detection</span></label>
-          <label class="ri"><input type="radio" name="he-fail" value="Camera glitch"><span>Camera glitch</span></label>
-          <label class="ri"><input type="radio" name="he-fail" value="Face positioning"><span>Face positioning</span></label>
-          <label class="ri"><input type="radio" name="he-fail" value="Glasses / head covering"><span>Glasses / head covering</span></label>
-          <label class="ri"><input type="radio" name="he-fail" value="Unknown"><span>Unknown</span></label>
-        </div>
-      </div>
-      <!-- Nested: blocked state -->
-      <div class="nested nested-red" id="nest-he-blocked">
-        <div class="stitle">⛔ Blocked — supervisor intervention required</div>
-        <div class="field"><label>Was supervisor contacted?</label>
-          <div class="rg" id="he-blocked-sup-grp">
-            <label class="ri"><input type="radio" name="he-blocked-sup" value="Yes — supervisor unlocked"><span>Yes — supervisor unlocked enrollment</span></label>
-            <label class="ri"><input type="radio" name="he-blocked-sup" value="Yes — supervisor could not resolve"><span>Yes — supervisor could not resolve</span></label>
-            <label class="ri"><input type="radio" name="he-blocked-sup" value="No — could not reach supervisor"><span>No — could not reach supervisor</span></label>
-          </div>
-        </div>
-        <div class="field"><label>What reason did liveness keep failing?</label>
-          <div class="rg" id="he-block-reason-grp">
-            <label class="ri"><input type="radio" name="he-block-reason" value="Skin tone — model could not detect liveness"><span>Skin tone — model could not detect liveness</span></label>
-            <label class="ri"><input type="radio" name="he-block-reason" value="Camera hardware issue"><span>Camera hardware issue</span></label>
-            <label class="ri"><input type="radio" name="he-block-reason" value="Very poor lighting — could not improve"><span>Very poor lighting</span></label>
-            <label class="ri"><input type="radio" name="he-block-reason" value="Unknown"><span>Unknown</span></label>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="field"><label>Liveness check overall result</label>
-      <div class="rg" id="he-live-grp">
-        <label class="ri"><input type="radio" name="he-live" value="Passed"><span>Passed</span></label>
-        <label class="ri"><input type="radio" name="he-live" value="Passed after retry"><span>Passed after retry</span></label>
-        <label class="ri"><input type="radio" name="he-live" value="Failed — blocked"><span>Failed — enrollment blocked</span></label>
-      </div>
-    </div>
-    <div class="field"><label>Fitzpatrick skin tone (observer estimate)</label>
-      <div class="rg" id="he-fitz-grp">
-        <label class="ri"><input type="radio" name="he-fitz" value="I–III (light)"><span>I–III — light</span></label>
-        <label class="ri"><input type="radio" name="he-fitz" value="IV (medium-brown)"><span>IV — medium-brown</span></label>
-        <label class="ri"><input type="radio" name="he-fitz" value="V (dark-brown)"><span>V — dark-brown</span></label>
-        <label class="ri"><input type="radio" name="he-fitz" value="VI (deeply dark)"><span>VI — deeply dark</span></label>
-      </div>
-    </div>
-    <div class="field"><label>Profile stored correctly under system user's device?</label>
-      <div class="rg" id="he-profile-grp">
-        <label class="ri"><input type="radio" name="he-profile" value="Yes — visible in My Team panel"><span>Yes — visible in My Team panel</span></label>
-        <label class="ri"><input type="radio" name="he-profile" value="No — not visible"><span>No — not visible</span></label>
-        <label class="ri"><input type="radio" name="he-profile" value="Could not verify"><span>Could not verify</span></label>
-      </div>
-    </div>
-    <div class="field"><label>Lighting at enrollment</label>
-      <select id="he-lighting">
-        <option value="">Select…</option>
-        <option>Indoor — dim</option><option>Indoor — bright fluorescent</option>
-        <option>Outdoor — shade</option><option>Outdoor — direct sun</option>
-      </select>
-    </div>
-    <div class="field"><label>Time taken (seconds)</label><input type="number" id="he-time" min="0" placeholder="e.g. 90"></div>
-    <div class="field"><label>Observer notes</label><textarea id="he-notes" placeholder="Any issues or notable moments…"></textarea></div>
-  </div>
-  <button class="btn-p" onclick="saveHelperE()">Save helper enrollment</button>
-  <button class="btn-s" onclick="clearForm('helper-e')">Clear</button>
-</div>
-
-<!-- ══════════════════════════════════════════════════════════════════════
-     HELPER DAILY
-════════════════════════════════════════════════════════════════════════ -->
-<div id="helper-d" class="screen">
-  <div id="hd-toast" class="toast">✓ Helper daily record saved</div>
-  <div class="info-box">ℹ Helpers have NO PIN fallback. If face scan fails 3 times, the helper is blocked — this must be noted as a critical failure.</div>
-  <div class="section">
-    <div class="stitle">Session context</div>
-    <div class="field"><label>Helper name / ID <span class="req">*</span></label><input type="text" id="hd-name" placeholder="e.g. H01 — Fatima"></div>
-    <div class="field"><label>System user paired with <span class="req">*</span></label><input type="text" id="hd-sysuser" placeholder="e.g. W01 — Amara"></div>
-    <div class="field"><label>Day # <span class="req">*</span></label><input type="number" id="hd-day" min="1" max="10" placeholder="1–10"></div>
-    <div class="field"><label>Session type <span class="req">*</span></label>
-      <div class="rg" id="hd-type-grp">
-        <label class="ri"><input type="radio" name="hd-type" value="Morning scan"><span>Morning scan</span></label>
-        <label class="ri"><input type="radio" name="hd-type" value="Re-verification prompt"><span>Re-verification prompt</span></label>
-      </div>
-    </div>
-  </div>
-  <div class="section">
-    <div class="stitle">Scan result</div>
-    <div class="field"><label>How was the scan initiated?</label>
-      <div class="rg" id="hd-init-grp">
-        <label class="ri"><input type="radio" name="hd-init" value="Via ticker — helper held device"><span>Via ticker — helper held device</span></label>
-        <label class="ri"><input type="radio" name="hd-init" value="Via hamburger menu — My Team"><span>Via hamburger menu → My Team</span></label>
-        <label class="ri"><input type="radio" name="hd-init" value="System user completed on behalf"><span>System user completed it on helper's behalf</span></label>
-      </div>
-    </div>
-    <div class="field"><label>Face scan result <span class="req">*</span></label>
-      <div class="rg" id="hd-result-grp">
-        <label class="ri"><input type="radio" name="hd-result" value="PASS — 1st attempt" onchange="hdResultChange(this)"><span>PASS — 1st attempt</span></label>
-        <label class="ri"><input type="radio" name="hd-result" value="PASS — after retry" onchange="hdResultChange(this)"><span>PASS — after retry</span></label>
-        <label class="ri"><input type="radio" name="hd-result" value="BLOCKED — failed all 3 attempts" onchange="hdResultChange(this)"><span>BLOCKED — failed all 3 attempts</span></label>
-        <label class="ri"><input type="radio" name="hd-result" value="Prompt expired — not completed" onchange="hdResultChange(this)"><span>Prompt expired — not completed</span></label>
-      </div>
-
-      <!-- Nested: retry -->
-      <div class="nested nested-amber" id="nest-hd-retry">
-        <div class="stitle">Retry details</div>
-        <div class="field"><label>Attempts before pass</label>
-          <div class="rg" id="hd-attempts-grp">
-            <label class="ri"><input type="radio" name="hd-attempts" value="2"><span>2 attempts</span></label>
-            <label class="ri"><input type="radio" name="hd-attempts" value="3"><span>3 attempts</span></label>
-          </div>
-        </div>
-        <div class="field"><label>Likely reason for initial failure</label>
-          <div class="rg" id="hd-retry-reason-grp">
-            <label class="ri"><input type="radio" name="hd-retry-reason" value="Poor lighting"><span>Poor lighting</span></label>
-            <label class="ri"><input type="radio" name="hd-retry-reason" value="Skin tone / model accuracy"><span>Skin tone / model accuracy</span></label>
-            <label class="ri"><input type="radio" name="hd-retry-reason" value="Camera glitch"><span>Camera glitch</span></label>
-            <label class="ri"><input type="radio" name="hd-retry-reason" value="Face positioning"><span>Face positioning</span></label>
-            <label class="ri"><input type="radio" name="hd-retry-reason" value="Unknown"><span>Unknown</span></label>
-          </div>
-        </div>
-      </div>
-
-      <!-- Nested: BLOCKED — critical failure, no PIN fallback -->
-      <div class="nested nested-red" id="nest-hd-blocked">
-        <div class="stitle">⛔ BLOCKED — helper has no PIN fallback. This is a critical failure.</div>
-        <div class="field"><label>Failure reason (all 3 attempts)</label>
-          <div class="rg" id="hd-block-reason-grp">
-            <label class="ri"><input type="radio" name="hd-block-reason" value="Skin tone — consistent failure"><span>Skin tone — consistent failure across attempts</span></label>
-            <label class="ri"><input type="radio" name="hd-block-reason" value="Poor lighting — all attempts"><span>Poor lighting — all attempts failed</span></label>
-            <label class="ri"><input type="radio" name="hd-block-reason" value="Camera hardware issue"><span>Camera hardware issue</span></label>
-            <label class="ri"><input type="radio" name="hd-block-reason" value="Unknown — no pattern"><span>Unknown — no obvious pattern</span></label>
-          </div>
-        </div>
-        <div class="field"><label>What happened next?</label>
-          <div class="rg" id="hd-blocked-next-grp">
-            <label class="ri"><input type="radio" name="hd-blocked-next" value="Supervisor notified — override granted"><span>Supervisor notified — override granted</span></label>
-            <label class="ri"><input type="radio" name="hd-blocked-next" value="Supervisor notified — could not resolve"><span>Supervisor notified — could not resolve</span></label>
-            <label class="ri"><input type="radio" name="hd-blocked-next" value="Helper marked absent"><span>Helper marked absent for this session</span></label>
-            <label class="ri"><input type="radio" name="hd-blocked-next" value="Helper continued without attendance recorded"><span>Helper continued without attendance recorded</span></label>
-          </div>
-        </div>
-      </div>
-
-    </div><!-- /result field -->
-
-    <div class="field"><label>Confidence score from API (optional)</label>
-      <input type="number" id="hd-conf" step="0.001" min="0" max="1" placeholder="e.g. 0.791">
-      <div class="hint">Key skin tone signal for helpers. Flag if below 0.75.</div>
-    </div>
-    <div class="field"><label>Was helper physically present for the scan?</label>
-      <div class="rg" id="hd-present-grp">
-        <label class="ri"><input type="radio" name="hd-present" value="Yes — scanned themselves"><span>Yes — present and scanned themselves</span></label>
-        <label class="ri"><input type="radio" name="hd-present" value="Absent — system user handled"><span>Absent — system user handled it</span></label>
-        <label class="ri"><input type="radio" name="hd-present" value="Could not observe"><span>Could not observe</span></label>
-      </div>
-    </div>
-    <div class="field"><label>Any profile mix-up between helper and system user?</label>
-      <div class="rg" id="hd-mixup-grp">
-        <label class="ri"><input type="radio" name="hd-mixup" value="No"><span>No</span></label>
-        <label class="ri"><input type="radio" name="hd-mixup" value="Yes — wrong profile scanned"><span>Yes — wrong profile scanned</span></label>
-        <label class="ri"><input type="radio" name="hd-mixup" value="Unclear"><span>Unclear</span></label>
-      </div>
-    </div>
-    <div class="field"><label>Observer notes</label><textarea id="hd-notes" placeholder="Any notable issues or moments…"></textarea></div>
-  </div>
-  <button class="btn-p" onclick="saveHelperD()">Save helper daily record</button>
-  <button class="btn-s" onclick="clearForm('helper-d')">Clear</button>
-</div>
-
-<!-- ══════════════════════════════════════════════════════════════════════
-     ATTENDANCE MARKER
-════════════════════════════════════════════════════════════════════════ -->
+<!-- ══ ATTENDANCE MARKER ═════════════════════════════════════════════════ -->
 <div id="am" class="screen">
-  <div id="am-toast" class="toast">✓ Attendance marker record saved</div>
-  <div class="info-box">ℹ Attendance marker views the register, sees face scan photos, and manually marks workers present or absent. They do not approve/reject records or view anomaly reports.</div>
+  <div id="am-toast" class="toast">✓ Saved</div>
+  <div class="info-box">ℹ Marker views register, sees face scan photo, and manually marks present/absent. Does not approve/reject records or view anomaly reports.</div>
   <div class="section">
     <div class="stitle">Session context</div>
-    <div class="field"><label>Marker / supervisor name <span class="req">*</span></label><input type="text" id="am-name" placeholder="Supervisor name or ID"></div>
-    <div class="field"><label>Day # <span class="req">*</span></label><input type="number" id="am-day" min="1" max="10" placeholder="1–10"></div>
+    <div class="field"><label>Marker name <span class="req">*</span></label><input type="text" id="am-name" placeholder="Supervisor name or ID"></div>
     <div class="field"><label>Worker being reviewed</label><input type="text" id="am-worker" placeholder="Worker or helper ID"></div>
+    <div class="field"><label>Day # <span class="req">*</span></label><input type="number" id="am-day" min="1" max="4" placeholder="1–4"></div>
   </div>
   <div class="section">
     <div class="stitle">Register view</div>
-    <div class="field"><label>Was the register loaded correctly (all workers listed)?</label>
+    <div class="field"><label>Register loaded correctly — all workers listed?</label>
       <div class="rg" id="am-reg-grp">
-        <label class="ri"><input type="radio" name="am-reg" value="Yes — all workers present"><span>Yes — all workers present</span></label>
-        <label class="ri"><input type="radio" name="am-reg" value="Missing workers in list"><span>Missing workers in list</span></label>
-        <label class="ri"><input type="radio" name="am-reg" value="Register failed to load"><span>Register failed to load</span></label>
+        <label class="ri"><input type="radio" name="am-reg" value="Yes — all present"><span>Yes — all workers present</span></label>
+        <label class="ri"><input type="radio" name="am-reg" value="Missing workers"><span>Missing workers in list</span></label>
+        <label class="ri"><input type="radio" name="am-reg" value="Failed to load"><span>Register failed to load</span></label>
       </div>
     </div>
-    <div class="field"><label>Was the face scan photo visible for this worker?</label>
+    <div class="field"><label>Face scan photo visible for this worker?</label>
       <div class="rg" id="am-photo-grp">
-        <label class="ri"><input type="radio" name="am-photo" value="Yes — photo clearly visible" onchange="amPhotoChange(this)"><span>Yes — photo clearly visible</span></label>
-        <label class="ri"><input type="radio" name="am-photo" value="Yes — photo visible but poor quality" onchange="amPhotoChange(this)"><span>Yes — visible but poor quality</span></label>
-        <label class="ri"><input type="radio" name="am-photo" value="No — photo missing" onchange="amPhotoChange(this)"><span>No — photo missing</span></label>
-        <label class="ri"><input type="radio" name="am-photo" value="N/A — PIN fallback was used" onchange="amPhotoChange(this)"><span>N/A — PIN fallback was used (no photo)</span></label>
+        <label class="ri"><input type="radio" name="am-photo" value="Yes — clearly visible" onchange="amPhotoChange(this)"><span>Yes — clearly visible</span></label>
+        <label class="ri"><input type="radio" name="am-photo" value="Yes — poor quality" onchange="amPhotoChange(this)"><span>Yes — visible but poor quality</span></label>
+        <label class="ri"><input type="radio" name="am-photo" value="No — missing" onchange="amPhotoChange(this)"><span>No — photo missing</span></label>
+        <label class="ri"><input type="radio" name="am-photo" value="N/A — PIN used" onchange="amPhotoChange(this)"><span>N/A — PIN fallback (no photo)</span></label>
       </div>
-      <!-- Nested: photo visible — match assessment -->
       <div class="nested nested-teal" id="nest-am-match">
         <div class="stitle">Face match assessment</div>
-        <div class="field"><label>Did the face scan photo match the worker in person?</label>
+        <div class="field"><label>Did photo match worker in person?</label>
           <div class="rg" id="am-match-grp">
             <label class="ri"><input type="radio" name="am-match" value="Clear match"><span>Clear match</span></label>
-            <label class="ri"><input type="radio" name="am-match" value="Possible match — marker had doubts"><span>Possible match — marker had doubts</span></label>
-            <label class="ri"><input type="radio" name="am-match" value="Mismatch — different person suspected"><span>Mismatch — different person suspected</span></label>
+            <label class="ri"><input type="radio" name="am-match" value="Possible — doubts"><span>Possible match — marker had doubts</span></label>
+            <label class="ri"><input type="radio" name="am-match" value="Mismatch"><span>Mismatch — different person suspected</span></label>
           </div>
         </div>
-        <div class="field"><label>Was the confidence score visible and meaningful to the marker?</label>
+        <div class="field"><label>Was confidence score visible and meaningful to marker?</label>
           <div class="rg" id="am-score-grp">
-            <label class="ri"><input type="radio" name="am-score" value="Yes — understood it"><span>Yes — understood what it means</span></label>
+            <label class="ri"><input type="radio" name="am-score" value="Yes — understood"><span>Yes — understood it</span></label>
             <label class="ri"><input type="radio" name="am-score" value="Visible but confusing"><span>Visible but confusing</span></label>
             <label class="ri"><input type="radio" name="am-score" value="Not visible"><span>Not visible</span></label>
           </div>
         </div>
       </div>
-      <!-- Nested: photo missing -->
-      <div class="nested nested-red" id="nest-am-missing">
-        <div class="stitle">Photo missing — note context</div>
-        <div class="field"><label>What was the attendance method?</label>
-          <div class="rg" id="am-missing-method-grp">
-            <label class="ri"><input type="radio" name="am-missing-method" value="PIN fallback — no photo expected"><span>PIN fallback — no photo expected</span></label>
-            <label class="ri"><input type="radio" name="am-missing-method" value="Face scan — photo should be present (bug)"><span>Face scan — photo should be present (bug)</span></label>
-            <label class="ri"><input type="radio" name="am-missing-method" value="Unknown"><span>Unknown</span></label>
-          </div>
-        </div>
-      </div>
     </div>
   </div>
   <div class="section">
-    <div class="stitle">Present / absent marking</div>
-    <div class="field"><label>What did the marker mark for this worker?</label>
+    <div class="stitle">Present / absent decision</div>
+    <div class="field"><label>What did the marker mark?</label>
       <div class="rg" id="am-mark-grp">
-        <label class="ri"><input type="radio" name="am-mark" value="Present — face scan matched"><span>Present — face scan matched</span></label>
-        <label class="ri"><input type="radio" name="am-mark" value="Present — PIN fallback, physically confirmed"><span>Present — PIN fallback, physically confirmed</span></label>
+        <label class="ri"><input type="radio" name="am-mark" value="Present — face matched"><span>Present — face scan matched</span></label>
+        <label class="ri"><input type="radio" name="am-mark" value="Present — PIN, confirmed physically"><span>Present — PIN fallback, physically confirmed</span></label>
         <label class="ri"><input type="radio" name="am-mark" value="Absent"><span>Absent</span></label>
-        <label class="ri"><input type="radio" name="am-mark" value="Queried — could not confirm identity"><span>Queried — could not confirm identity</span></label>
+        <label class="ri"><input type="radio" name="am-mark" value="Queried — could not confirm"><span>Queried — could not confirm identity</span></label>
       </div>
     </div>
-    <div class="field"><label>Was the marker confident in their decision?</label>
+    <div class="field"><label>Marker confident in this decision?</label>
       <div class="rg" id="am-conf-grp">
-        <label class="ri"><input type="radio" name="am-conf" value="Yes — fully confident"><span>Yes — fully confident</span></label>
+        <label class="ri"><input type="radio" name="am-conf" value="Fully confident"><span>Fully confident</span></label>
         <label class="ri"><input type="radio" name="am-conf" value="Mostly — minor doubt"><span>Mostly — minor doubt</span></label>
         <label class="ri"><input type="radio" name="am-conf" value="No — significant doubt"><span>No — significant doubt</span></label>
       </div>
     </div>
-    <div class="field"><label>Time taken to review and mark this worker (seconds)</label><input type="number" id="am-time" min="0" placeholder="e.g. 45"></div>
+    <div class="field"><label>Time taken to review this worker (seconds)</label><input type="number" id="am-time" min="0" placeholder="e.g. 45"></div>
   </div>
   <div class="section">
     <div class="stitle">Overall marker experience</div>
-    <div class="field"><label>Overall ease of use (1 = very difficult, 5 = very easy)</label>
+    <div class="field"><label>Ease of use (1 = very difficult, 5 = very easy)</label>
       <div class="scale-row" id="am-usability">
-        <button class="sb" onclick="pickScale('am-usability',this,'1')">1<br><span style="font-size:9px">Very hard</span></button>
+        <button class="sb" onclick="pickScale('am-usability',this,'1')">1<br><span style="font-size:9px">Hard</span></button>
         <button class="sb" onclick="pickScale('am-usability',this,'2')">2</button>
         <button class="sb" onclick="pickScale('am-usability',this,'3')">3<br><span style="font-size:9px">Neutral</span></button>
         <button class="sb" onclick="pickScale('am-usability',this,'4')">4</button>
-        <button class="sb" onclick="pickScale('am-usability',this,'5')">5<br><span style="font-size:9px">Very easy</span></button>
+        <button class="sb" onclick="pickScale('am-usability',this,'5')">5<br><span style="font-size:9px">Easy</span></button>
       </div>
     </div>
-    <div class="field"><label>Would the marker trust this system to support payroll decisions?</label>
+    <div class="field"><label>Would trust this system for payroll decisions?</label>
       <div class="rg" id="am-trust-grp">
         <label class="ri"><input type="radio" name="am-trust" value="Yes — fully confident"><span>Yes — fully confident</span></label>
         <label class="ri"><input type="radio" name="am-trust" value="Yes — with reservations"><span>Yes — with reservations</span></label>
-        <label class="ri"><input type="radio" name="am-trust" value="No — not yet confident"><span>No — not yet confident</span></label>
+        <label class="ri"><input type="radio" name="am-trust" value="No — not yet"><span>No — not yet confident</span></label>
       </div>
     </div>
-    <div class="field"><label>Biggest pain point or confusion observed</label><textarea id="am-pain" placeholder="What caused the most friction?"></textarea></div>
+    <div class="field"><label>Biggest pain point observed</label><textarea id="am-pain" placeholder="What caused the most friction?"></textarea></div>
     <div class="field"><label>Observer notes</label><textarea id="am-notes" placeholder="Any other observations…"></textarea></div>
   </div>
-  <button class="btn-p" onclick="saveAM()">Save attendance marker record</button>
+  <button class="btn-p" onclick="saveAM()">Save marker record</button>
   <button class="btn-s" onclick="clearForm('am')">Clear</button>
 </div>
 
-<!-- ══════════════════════════════════════════════════════════════════════
-     RECOGNITION ACCURACY TEST
-════════════════════════════════════════════════════════════════════════ -->
+<!-- ══ RECOGNITION ACCURACY TEST ════════════════════════════════════════ -->
 <div id="rat" class="screen">
-  <div id="rat-toast" class="toast">✓ Recognition accuracy result saved</div>
-  <div class="info-box">ℹ Use this form for structured Day 5 sessions. Test each worker/helper across multiple conditions. Capture confidence scores from the API after each attempt.</div>
+  <div id="rat-toast" class="toast">✓ Saved</div>
+  <div class="info-box">ℹ Day 3 structured sessions. Test each worker/helper across all 4 lighting conditions. Pull confidence scores from API after each attempt.</div>
   <div class="section">
     <div class="stitle">Session details</div>
     <div class="field"><label>Worker / helper ID <span class="req">*</span></label><input type="text" id="rat-worker" placeholder="e.g. W01 or H01"></div>
     <div class="field"><label>User type</label>
       <div class="rg" id="rat-utype-grp">
         <label class="ri"><input type="radio" name="rat-utype" value="System user"><span>System user</span></label>
-        <label class="ri"><input type="radio" name="rat-utype" value="Helper / non-system user"><span>Helper / non-system user</span></label>
+        <label class="ri"><input type="radio" name="rat-utype" value="Helper"><span>Helper / non-system user</span></label>
       </div>
     </div>
-    <div class="field"><label>Day #</label><input type="number" id="rat-day" value="5" min="1" max="10"></div>
-    <div class="field"><label>Fitzpatrick skin tone</label>
+    <div class="field"><label>Day</label><input type="number" id="rat-day" value="3" min="1" max="4"></div>
+    <div class="field"><label>Fitzpatrick skin tone <span class="req">*</span></label>
       <div class="rg" id="rat-fitz-grp">
         <label class="ri"><input type="radio" name="rat-fitz" value="I–III (light)"><span>I–III — light</span></label>
         <label class="ri"><input type="radio" name="rat-fitz" value="IV (medium-brown)"><span>IV — medium-brown</span></label>
@@ -636,28 +563,28 @@ select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='ht
         <label class="ri"><input type="radio" name="rat-light" value="Outdoor — direct sun"><span>Outdoor — direct sun</span></label>
       </div>
     </div>
-    <div class="field"><label>Ambient brightness (finer estimate)</label>
+    <div class="field"><label>Ambient brightness</label>
       <div class="rg" id="rat-bright-grp">
         <label class="ri"><input type="radio" name="rat-bright" value="Very dark"><span>Very dark — hard to see face</span></label>
-        <label class="ri"><input type="radio" name="rat-bright" value="Dim"><span>Dim — face visible, low contrast</span></label>
+        <label class="ri"><input type="radio" name="rat-bright" value="Dim"><span>Dim — visible, low contrast</span></label>
         <label class="ri"><input type="radio" name="rat-bright" value="Normal"><span>Normal indoor light</span></label>
         <label class="ri"><input type="radio" name="rat-bright" value="Bright"><span>Bright — clear visibility</span></label>
-        <label class="ri"><input type="radio" name="rat-bright" value="Glare"><span>Glare — strong backlight or sun on face</span></label>
+        <label class="ri"><input type="radio" name="rat-bright" value="Glare"><span>Glare — sun or backlight on face</span></label>
       </div>
     </div>
-    <div class="field"><label>Any camera or technical issues observed?</label>
+    <div class="field"><label>Camera / technical issues</label>
       <div class="rg" id="rat-camera-grp">
-        <label class="ri"><input type="radio" name="rat-camera" value="No — camera working normally"><span>No — camera working normally</span></label>
-        <label class="ri"><input type="radio" name="rat-camera" value="Camera lag / slow to activate"><span>Camera lag / slow to activate</span></label>
-        <label class="ri"><input type="radio" name="rat-camera" value="Camera glitched / froze"><span>Camera glitched / froze during scan</span></label>
-        <label class="ri"><input type="radio" name="rat-camera" value="Camera failed to open"><span>Camera failed to open</span></label>
-        <label class="ri"><input type="radio" name="rat-camera" value="Low-end device — visible processing lag"><span>Low-end device — visible processing lag</span></label>
+        <label class="ri"><input type="radio" name="rat-camera" value="None"><span>None — camera working normally</span></label>
+        <label class="ri"><input type="radio" name="rat-camera" value="Lag / slow to activate"><span>Camera lag / slow to activate</span></label>
+        <label class="ri"><input type="radio" name="rat-camera" value="Glitch / froze"><span>Camera glitched or froze</span></label>
+        <label class="ri"><input type="radio" name="rat-camera" value="Failed to open"><span>Camera failed to open</span></label>
+        <label class="ri"><input type="radio" name="rat-camera" value="Processing lag — low-end device"><span>Processing lag — low-end device</span></label>
       </div>
     </div>
-    <div class="field"><label>Worker variables (select all that apply)</label>
+    <div class="field"><label>Worker variables (tick all that apply)</label>
       <div class="cg" id="rat-vars">
         <label class="ci"><input type="checkbox"><span>Wearing glasses</span></label>
-        <label class="ci"><input type="checkbox"><span>Head covering (hijab, cap, etc.)</span></label>
+        <label class="ci"><input type="checkbox"><span>Head covering (hijab, cap)</span></label>
         <label class="ci"><input type="checkbox"><span>Very close or far from camera</span></label>
         <label class="ci"><input type="checkbox"><span>Moving / not holding still</span></label>
         <label class="ci"><input type="checkbox"><span>Strong shadow across face</span></label>
@@ -665,36 +592,33 @@ select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='ht
     </div>
   </div>
   <div class="section">
-    <div class="stitle">Confidence scores — pull from API after each attempt</div>
+    <div class="stitle">Confidence scores — from API after each attempt</div>
     <div class="field"><label>Attempt 1 score <span class="req">*</span></label>
       <input type="number" id="rat-s1" step="0.001" min="0" max="1" placeholder="e.g. 0.834">
-      <div class="hint">From Attendance Log — confidence column. Threshold: 0.75. Range: 0–1.</div>
+      <div class="hint">Attendance Log — confidence column. Range 0–1. Threshold: 0.75.</div>
     </div>
     <div class="field"><label>Attempt 2 score (if applicable)</label><input type="number" id="rat-s2" step="0.001" min="0" max="1" placeholder="Blank if passed first time"></div>
     <div class="field"><label>Attempt 3 score (if applicable)</label><input type="number" id="rat-s3" step="0.001" min="0" max="1" placeholder="Blank if passed first time"></div>
     <div class="field"><label>Outcome <span class="req">*</span></label>
       <div class="rg" id="rat-out-grp">
         <label class="ri"><input type="radio" name="rat-out" value="PASS — face scan"><span>PASS — face scan</span></label>
-        <label class="ri"><input type="radio" name="rat-out" value="PIN fallback used (system user only)"><span>PIN fallback used (system user only)</span></label>
-        <label class="ri"><input type="radio" name="rat-out" value="BLOCKED — helper failed all attempts"><span>BLOCKED — helper failed all 3 attempts (no fallback)</span></label>
+        <label class="ri"><input type="radio" name="rat-out" value="PIN fallback (system user only)"><span>PIN fallback (system user only)</span></label>
         <label class="ri"><input type="radio" name="rat-out" value="Failed — could not complete"><span>Failed — could not complete</span></label>
       </div>
     </div>
-    <div class="field"><label>Notes (e.g. model behaviour, unexpected results, worker comments)</label><textarea id="rat-notes" placeholder="Anything notable about this session…"></textarea></div>
+    <div class="field"><label>Notes</label><textarea id="rat-notes" placeholder="Anything notable — model behaviour, worker comments, unexpected results…"></textarea></div>
   </div>
   <button class="btn-p" onclick="saveRAT()">Save accuracy result</button>
   <button class="btn-s" onclick="clearForm('rat')">Clear</button>
 </div>
 
-<!-- ══════════════════════════════════════════════════════════════════════
-     ISSUE LOG
-════════════════════════════════════════════════════════════════════════ -->
+<!-- ══ ISSUE LOG ══════════════════════════════════════════════════════════ -->
 <div id="issue" class="screen">
   <div id="iss-toast" class="toast">✓ Issue logged</div>
   <div class="section">
     <div class="stitle">Issue details</div>
-    <div class="field"><label>Worker / helper (blank if general)</label><input type="text" id="iss-worker" placeholder="Worker or helper ID"></div>
-    <div class="field"><label>Day # <span class="req">*</span></label><input type="number" id="iss-day" min="1" max="10" placeholder="1–10"></div>
+    <div class="field"><label>Worker / helper (blank if general)</label><input type="text" id="iss-worker" placeholder="ID or name"></div>
+    <div class="field"><label>Day # <span class="req">*</span></label><input type="number" id="iss-day" min="1" max="4" placeholder="1–4"></div>
     <div class="field"><label>Logged by</label>
       <div class="rg" id="iss-by-grp">
         <label class="ri"><input type="radio" name="iss-by" value="Observer"><span>Observer</span></label>
@@ -716,8 +640,7 @@ select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='ht
         <option>Face enrollment — helper</option>
         <option>Morning login</option>
         <option>Re-verification prompt</option>
-        <option>PIN fallback (system user)</option>
-        <option>Helper blocked — no fallback</option>
+        <option>PIN fallback</option>
         <option>Offline / sync</option>
         <option>GPS / location</option>
         <option>Attendance marker view</option>
@@ -726,7 +649,7 @@ select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='ht
         <option>Other</option>
       </select>
     </div>
-    <div class="field"><label>Condition <span class="req">*</span></label><input type="text" id="iss-cond" placeholder="e.g. Outdoor sun, 3rd attempt, helper W01"></div>
+    <div class="field"><label>Condition <span class="req">*</span></label><input type="text" id="iss-cond" placeholder="e.g. Outdoor sun, after 3 failed attempts"></div>
     <div class="field"><label>What happened <span class="req">*</span></label><textarea id="iss-what" placeholder="Describe exactly what you observed…"></textarea></div>
     <div class="field"><label>Developer action</label><textarea id="iss-action" placeholder="What will be done…"></textarea></div>
   </div>
@@ -734,406 +657,537 @@ select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='ht
   <button class="btn-s" onclick="clearForm('issue')">Clear</button>
 </div>
 
-<!-- ══════════════════════════════════════════════════════════════════════
-     RECORDS
-════════════════════════════════════════════════════════════════════════ -->
+<!-- ══ RECORDS ════════════════════════════════════════════════════════════ -->
 <div id="records" class="screen">
+  <!-- Sync summary -->
+  <div class="sync-summary">
+    <div class="sh">
+      <span class="st">Sync status</span>
+      <button class="force-sync-btn" onclick="forceSync()">Sync all now</button>
+    </div>
+    <div class="sync-bar-wrap"><div class="sync-bar" id="sync-bar" style="width:100%"></div></div>
+    <div class="sync-detail" id="sync-detail">Checking…</div>
+  </div>
+
   <div class="stats-row" id="stats-row"></div>
+
   <div class="exp-row">
     <button class="eb" onclick="exportCSV('observations')">↓ Observations</button>
-    <button class="eb" onclick="exportCSV('feedback')">↓ Worker feedback</button>
-    <button class="eb" onclick="exportCSV('helper_enroll')">↓ Helper enroll</button>
-    <button class="eb" onclick="exportCSV('helper_daily')">↓ Helper daily</button>
+    <button class="eb" onclick="exportCSV('feedback')">↓ Feedback</button>
     <button class="eb" onclick="exportCSV('att_marker')">↓ Att. marker</button>
     <button class="eb" onclick="exportCSV('rat')">↓ Recog. accuracy</button>
     <button class="eb" onclick="exportCSV('issues')">↓ Issues</button>
-    <button class="eb" onclick="retryQueue()" style="background:var(--amber-l);color:var(--amber);border-color:#E8A020">↑ Retry sync</button>
+    <button class="eb" onclick="exportCSV('_queue')" style="color:var(--amber)">↓ Unsynced queue</button>
   </div>
+
   <div class="filter-row">
     <select id="filter-type" onchange="renderRecords()">
       <option value="all">All types</option>
-      <option value="observation">Observations</option>
+      <option value="sys">System user obs.</option>
+      <option value="hlp">Helper obs.</option>
+      <option value="enr">Helper enrollment</option>
       <option value="feedback">Feedback</option>
-      <option value="helper_enroll">Helper enrollment</option>
-      <option value="helper_daily">Helper daily</option>
       <option value="att_marker">Att. marker</option>
       <option value="rat">Recog. accuracy</option>
       <option value="issue">Issues</option>
     </select>
     <select id="filter-day" onchange="renderRecords()">
       <option value="all">All days</option>
-      <option value="1">Day 1</option><option value="2">Day 2</option><option value="3">Day 3</option>
-      <option value="4">Day 4</option><option value="5">Day 5</option><option value="6">Day 6</option>
-      <option value="7">Day 7</option><option value="8">Day 8</option><option value="9">Day 9</option>
-      <option value="10">Day 10</option>
+      <option value="1">Day 1</option><option value="2">Day 2</option>
+      <option value="3">Day 3</option><option value="4">Day 4</option>
     </select>
   </div>
   <div id="records-list"></div>
 </div>
 
-</div></div><!-- /content /app -->
+</div></div>
 
 <script>
-const SCRIPT_URL = 'https://script.google.com/a/macros/egovernments.org/s/AKfycbxRjMDoFtrBbbs9HlyiN82-WpVGWZ3tFLQlB9KB6D8yS0BXQwTaozs5RDgkRyNIVieV7w/exec';
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxp83pQoZX028gnvTvo0k6Xk-Jn7YlwxVEQqSvO9iKxsFRb7jDMx0VUMUINsTQytnEvFg/exec';
+
+// ── State ──────────────────────────────────────────────────────────────────
+let utype = 'sys'; // 'sys' | 'hlp' | 'enr'
 let scaleVals = {};
 
 const OBS_CHECKLISTS = {
-  Enrollment:["Worker enrolled without guidance","Camera activated on first tap","Liveness check passed first attempt","Worker understood angle capture","PIN shown and acknowledged","Worker appeared confused or anxious","Re-enrollment was needed","Time felt reasonable (under 3 mins)"],
-  "Morning login":["Camera activated automatically on open","Face recognised first attempt","Attendance confirmation displayed","GPS acquired (no 0.0 error)","Login time reasonable (under 30s)","Worker appeared confident","Error message shown to worker"],
-  "Re-verification":["Ticker appeared at top of screen","Worker noticed ticker without being told","Worker completed scan within window","Prompt expired — window missed","Prompt fired during registration/delivery","Worker appeared confused by prompt","App allowed workflow to continue (non-blocking)","Worker was mid-critical-workflow","Worker responded within 60 seconds"]
+  'Morning login': [
+    "Camera activated automatically on app open",
+    "Face recognised on first attempt",
+    "Attendance confirmation displayed",
+    "GPS acquired (no 0.0 error)",
+    "Login time reasonable (under 30s)",
+    "Worker appeared confident",
+    "Error message shown to worker"
+  ],
+  'Re-verification': [
+    "Ticker appeared at top of screen",
+    "Worker noticed ticker without being told",
+    "Worker completed scan within window",
+    "Prompt expired — window missed",
+    "Prompt fired during registration/delivery",
+    "Worker appeared confused by prompt",
+    "App allowed workflow to continue (non-blocking)",
+    "Worker was mid-critical-workflow",
+    "Worker responded within 60 seconds"
+  ]
 };
 
-// ── Navigation ───────────────────────────────────────────────────────────
-function show(id,btn){
-  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+// ── Navigation ─────────────────────────────────────────────────────────────
+function show(id, btn) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
   document.getElementById(id).classList.add('active');
-  document.querySelectorAll('.nav button').forEach(b=>b.classList.remove('active'));
-  if(btn)btn.classList.add('active');
-  if(id==='records')renderRecords();
+  document.querySelectorAll('.nav button').forEach(b => b.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+  if (id === 'records') { renderRecords(); renderSyncSummary(); }
 }
 
-// ── Checklist builder ────────────────────────────────────────────────────
-function buildChecklist(type){
-  const wrap=document.getElementById('obs-checks');wrap.innerHTML='';
-  (OBS_CHECKLISTS[type]||[]).forEach(item=>{
-    const lbl=document.createElement('label');lbl.className='ci';
-    const cb=document.createElement('input');cb.type='checkbox';
-    cb.addEventListener('change',()=>lbl.classList.toggle('chk',cb.checked));
-    const sp=document.createElement('span');sp.textContent=item;
-    lbl.appendChild(cb);lbl.appendChild(sp);wrap.appendChild(lbl);
+// ── User type toggle ───────────────────────────────────────────────────────
+function setUtype(t) {
+  utype = t;
+  ['sys','hlp','enr'].forEach(u => {
+    const btn = document.getElementById('btn-' + u);
+    btn.classList.remove('active-sys','active-hlp');
+    if (u === t) btn.classList.add(t === 'enr' ? 'active-sys' : 'active-' + t);
   });
-  syncR('obs-type-grp','obs-type');
+  // Context sections
+  document.getElementById('ctx-sys-hlp').style.display = t === 'enr' ? 'none' : 'block';
+  document.getElementById('ctx-enr').style.display = t === 'enr' ? 'block' : 'none';
+  document.getElementById('obs-checklist-section').style.display = t === 'enr' ? 'none' : 'block';
+  document.getElementById('obs-outcome-section').style.display = t === 'enr' ? 'none' : 'block';
+  document.getElementById('enr-section').style.display = t === 'enr' ? 'block' : 'none';
+  document.getElementById('enr-notes-section').style.display = t === 'enr' ? 'block' : 'none';
+  // Helper paired with field
+  document.getElementById('paired-with-field').style.display = t === 'hlp' ? 'block' : 'none';
+  // Helper-specific scan fields
+  document.getElementById('helper-scan-fields').style.display = t === 'hlp' ? 'block' : 'none';
+  // PIN option visibility
+  const pinOpt = document.getElementById('pin-opt');
+  if (pinOpt) pinOpt.closest('.ri').style.display = t === 'hlp' ? 'none' : 'flex';
+  if (t !== 'enr') buildChecklist();
 }
 
-// ── Conditional show/hide ────────────────────────────────────────────────
-function nest(id,show){document.getElementById(id).classList.toggle('show',show);}
-
-function obsResultChange(el){
-  syncR('obs-result-grp','obs-result');
-  nest('nest-retry', el.value==='PASS — after retry');
-  nest('nest-pin',   el.value==='PIN fallback used');
+// ── Checklist ──────────────────────────────────────────────────────────────
+function buildChecklist() {
+  const type = getR('obs-type');
+  const wrap = document.getElementById('obs-checks');
+  if (!type) return;
+  wrap.innerHTML = '';
+  (OBS_CHECKLISTS[type] || []).forEach(item => {
+    const lbl = document.createElement('label');
+    lbl.className = 'ci';
+    const cb = document.createElement('input'); cb.type = 'checkbox';
+    cb.addEventListener('change', () => lbl.classList.toggle('chk', cb.checked));
+    const sp = document.createElement('span'); sp.textContent = item;
+    lbl.appendChild(cb); lbl.appendChild(sp); wrap.appendChild(lbl);
+  });
+  syncR('obs-type-grp', 'obs-type');
 }
 
-function heAttemptChange(el){
-  syncR('he-attempt-grp','he-attempt');
-  const isRetry = el.value==='2nd attempt — re-enrollment'||el.value==='3rd attempt — re-enrollment again';
-  const isBlocked = el.value==='Blocked after 3 fails';
-  nest('nest-he-retry',   isRetry);
-  nest('nest-he-blocked', isBlocked);
+// ── Conditionals ───────────────────────────────────────────────────────────
+function nest(id, show) { document.getElementById(id).classList.toggle('show', show); }
+
+function obsResultChange(el) {
+  syncR('obs-result-grp', 'obs-result');
+  nest('nest-retry', el.value === 'PASS — after retry');
+  nest('nest-pin', el.value === 'PIN fallback used');
 }
 
-function hdResultChange(el){
-  syncR('hd-result-grp','hd-result');
-  nest('nest-hd-retry',   el.value==='PASS — after retry');
-  nest('nest-hd-blocked', el.value==='BLOCKED — failed all 3 attempts');
+function amPhotoChange(el) {
+  syncR('am-photo-grp', 'am-photo');
+  nest('nest-am-match', el.value.startsWith('Yes'));
 }
 
-function amPhotoChange(el){
-  syncR('am-photo-grp','am-photo');
-  const hasPhoto = el.value.startsWith('Yes');
-  const missing  = el.value==='No — photo missing';
-  nest('nest-am-match',   hasPhoto);
-  nest('nest-am-missing', missing);
+// ── Radio helpers ──────────────────────────────────────────────────────────
+function syncR(gid, name) {
+  const sel = document.querySelector(`input[name="${name}"]:checked`);
+  document.querySelectorAll(`#${gid} .ri`).forEach(el =>
+    el.classList.toggle('sel', el.querySelector('input') === sel));
 }
-
-// ── Radio style sync ─────────────────────────────────────────────────────
-function syncR(gid,name){
-  const sel=document.querySelector(`input[name="${name}"]:checked`);
-  document.querySelectorAll(`#${gid} .ri`).forEach(el=>el.classList.toggle('sel',el.querySelector('input')===sel));
+function wireR(name, gid) {
+  document.querySelectorAll(`input[name="${name}"]`).forEach(r =>
+    r.addEventListener('change', () => syncR(gid, name)));
 }
-function wireR(name,gid){
-  document.querySelectorAll(`input[name="${name}"]`).forEach(r=>r.addEventListener('change',()=>syncR(gid,name)));
-}
-['att-conf','crash','wf-privacy','he-num','he-live','he-fitz','he-profile',
- 'he-fail','he-blocked-sup','he-block-reason',
- 'hd-type','hd-init','hd-present','hd-mixup','hd-attempts','hd-retry-reason','hd-block-reason','hd-blocked-next',
- 'obs-attempts','obs-fail-reason','obs-pin-attempts','obs-pin-reason','obs-pin-mem',
- 'am-reg','am-mark','am-conf','am-trust','am-match','am-score','am-missing-method',
+['att-conf','crash','wf-privacy','hd-init','hd-present','hd-mixup',
+ 'am-reg','am-mark','am-conf','am-trust','am-match','am-score',
  'rat-utype','rat-fitz','rat-light','rat-bright','rat-camera','rat-out',
+ 'obs-attempts','obs-fail-reason','obs-pin-attempts','obs-pin-reason','obs-pin-mem',
+ 'enr-num','enr-live','enr-fitz','enr-profile','enr-confusion','enr-fail',
  'iss-by','iss-sev'
-].forEach(n=>wireR(n,n+'-grp'));
+].forEach(n => wireR(n, n + '-grp'));
 
-// ── Scale ────────────────────────────────────────────────────────────────
-function pickScale(gid,btn,val){
-  document.querySelectorAll(`#${gid} .sb`).forEach(b=>b.classList.remove('sel'));
-  btn.classList.add('sel');scaleVals[gid]=val;
+function pickScale(gid, btn, val) {
+  document.querySelectorAll(`#${gid} .sb`).forEach(b => b.classList.remove('sel'));
+  btn.classList.add('sel'); scaleVals[gid] = val;
 }
 
-// ── Data helpers ─────────────────────────────────────────────────────────
-function getR(name){const el=document.querySelector(`input[name="${name}"]:checked`);return el?el.value:'';}
-function getChecked(sel){return Array.from(document.querySelectorAll(`${sel}.chk`)).map(el=>el.querySelector('span').textContent).join(' | ');}
-function getData(key){try{return JSON.parse(localStorage.getItem('fp_'+key)||'[]');}catch{return[];}}
-function setData(key,arr){localStorage.setItem('fp_'+key,JSON.stringify(arr));}
-function getQ(){try{return JSON.parse(localStorage.getItem('fp_queue')||'[]');}catch{return[];}}
-function setQ(q){localStorage.setItem('fp_queue',JSON.stringify(q));}
-function now(){return new Date().toLocaleString('en-GB',{dateStyle:'short',timeStyle:'short'});}
+// ── Data helpers ───────────────────────────────────────────────────────────
+function getR(name) { const el = document.querySelector(`input[name="${name}"]:checked`); return el ? el.value : ''; }
+function getChecked(sel) { return Array.from(document.querySelectorAll(`${sel}.chk`)).map(el => el.querySelector('span').textContent).join(' | '); }
+function getData(key) { try { return JSON.parse(localStorage.getItem('fp_' + key) || '[]'); } catch { return []; } }
+function setData(key, arr) { localStorage.setItem('fp_' + key, JSON.stringify(arr)); }
+function getQueue() { try { return JSON.parse(localStorage.getItem('fp_queue') || '[]'); } catch { return []; } }
+function setQueue(q) { localStorage.setItem('fp_queue', JSON.stringify(q)); }
+function now() { return new Date().toLocaleString('en-GB', { dateStyle: 'short', timeStyle: 'short' }); }
+function flash(id) { const el = document.getElementById(id); el.classList.add('show'); setTimeout(() => el.classList.remove('show'), 2200); }
 
-function flash(id){const el=document.getElementById(id);el.classList.add('show');setTimeout(()=>el.classList.remove('show'),2200);}
-function uSI(t,c){const i=document.getElementById('sync-ind');i.textContent=t;i.style.color=c;}
-
-// ── Sync ─────────────────────────────────────────────────────────────────
-function push(type,record){
-  if(!SCRIPT_URL)return;
-  fetch(SCRIPT_URL,{method:'POST',headers:{'Content-Type':'text/plain'},body:JSON.stringify({type,record})})
-  .then(r=>r.json())
-  .then(d=>{
-    if(d.status==='ok'){uSI('● Synced','rgba(93,202,165,.9)');setTimeout(()=>uSI('● Sheet connected','rgba(93,202,165,.9)'),2500);}
-    else{qRec(type,record);uSI('● Sync failed — queued','rgba(255,180,50,.9)');}
-  })
-  .catch(()=>{qRec(type,record);uSI('● Offline — saved locally','rgba(255,180,50,.9)');updateRetry();});
-}
-function qRec(type,record){const q=getQ();q.push({type,record,qt:now()});setQ(q);updateRetry();}
-function updateRetry(){
-  const q=getQ();const bar=document.getElementById('obs-retry');const n=document.getElementById('obs-retry-n');
-  bar.classList.toggle('show',q.length>0);if(n)n.textContent=q.length;
-}
-function retryQueue(){
-  const q=getQ();if(!q.length){alert('Nothing to sync.');return;}
-  uSI('● Syncing…','rgba(255,180,50,.9)');
-  const failed=[];
-  const next=i=>{
-    if(i>=q.length){setQ(failed);updateRetry();
-      uSI(failed.length?`● ${failed.length} still failed`:'● All synced',failed.length?'rgba(255,180,50,.9)':'rgba(93,202,165,.9)');
-      return;}
-    const item=q[i];
-    fetch(SCRIPT_URL,{method:'POST',headers:{'Content-Type':'text/plain'},body:JSON.stringify({type:item.type,record:item.record})})
-    .then(r=>r.json()).then(d=>{if(d.status!=='ok')failed.push(item);next(i+1);})
-    .catch(()=>{failed.push(item);next(i+1);});
-  };next(0);
-}
-function save(key,rec,toastId,clearFn){
-  const arr=getData(key);arr.unshift(rec);setData(key,arr);push(key,rec);flash(toastId);clearFn();
+// ── Sync engine ────────────────────────────────────────────────────────────
+function setSyncUI(state, text) {
+  const dot = document.getElementById('sync-dot');
+  const txt = document.getElementById('sync-text');
+  dot.className = 'dot ' + (state === 'ok' ? '' : state === 'warn' ? 'warn' : 'off');
+  txt.textContent = text;
 }
 
-// ── Save functions ────────────────────────────────────────────────────────
-function saveObs(){
-  const w=document.getElementById('obs-worker').value.trim();
-  const t=getR('obs-type');const tm=document.getElementById('obs-time').value;
-  if(!w||!t)return alert('Worker and session type required.');
-  if(!tm)return alert('Time taken is required.');
-  const rec={ts:now(),worker:w,day:document.getElementById('obs-day').value,type:t,
-    lighting:document.getElementById('obs-lighting').value,
-    checklist_ticked:getChecked('#obs-checks .ci'),
-    result:getR('obs-result'),
-    attempts_before_pass:getR('obs-attempts'),
-    fail_reason:getR('obs-fail-reason'),
-    pin_attempts:getR('obs-pin-attempts'),
-    pin_reason:getR('obs-pin-reason'),
-    pin_memory:getR('obs-pin-mem'),
-    confidence:document.getElementById('obs-conf').value,
-    time_sec:tm,
-    attendance_confirmed:getR('att-conf'),
-    crash:getR('crash'),
-    reaction:document.getElementById('obs-reaction').value,
-    notes:document.getElementById('obs-notes').value};
-  save('observations',rec,'obs-toast',()=>clearForm('obs'));
+function push(type, record) {
+  if (!SCRIPT_URL) return;
+  fetch(SCRIPT_URL, { method: 'POST', headers: { 'Content-Type': 'text/plain' }, body: JSON.stringify({ type, record }) })
+    .then(r => r.json())
+    .then(d => {
+      if (d.status === 'ok') {
+        setSyncUI('ok', 'Synced just now');
+      } else {
+        enqueue(type, record);
+        setSyncUI('warn', getQueue().length + ' unsynced');
+      }
+    })
+    .catch(() => {
+      enqueue(type, record);
+      setSyncUI('warn', getQueue().length + ' unsynced — offline');
+    });
 }
 
-function saveWorker(){
-  const w=document.getElementById('wf-worker').value.trim();
-  const d=document.getElementById('wf-day').value;
-  if(!w||!d)return alert('Worker and day required.');
-  const rec={ts:now(),worker:w,day:d,pm:document.getElementById('wf-pm').value,
-    q1:document.getElementById('wf-q1').value,q2:document.getElementById('wf-q2').value,
-    q3:document.getElementById('wf-q3').value,q4:document.getElementById('wf-q4').value,
-    q5:document.getElementById('wf-q5').value,
-    privacy_concern:getR('wf-privacy'),
-    comfort_rating:scaleVals['wf-comfort']||'',
-    observer_notes:document.getElementById('wf-notes').value};
-  save('feedback',rec,'wf-toast',()=>clearForm('worker'));
+function enqueue(type, record) {
+  const q = getQueue();
+  // Avoid duplicates by clientId
+  const id = record.ts + record.worker + record.helper + record.supervisor;
+  if (q.some(i => (i.record.ts + i.record.worker + i.record.helper + i.record.supervisor) === id)) return;
+  q.push({ type, record, queued_at: now(), _attempts: 0 });
+  setQueue(q);
+  setSyncUI('warn', q.length + ' unsynced');
 }
 
-function saveHelperE(){
-  const n=document.getElementById('he-name').value.trim();
-  const s=document.getElementById('he-sysuser').value.trim();
-  const d=document.getElementById('he-day').value;
-  if(!n||!s||!d)return alert('Helper name, system user and day required.');
-  const rec={ts:now(),helper:n,system_user:s,day:d,
-    helper_number:getR('he-num'),attempt:getR('he-attempt'),
-    fail_reason:getR('he-fail'),
-    blocked_supervisor:getR('he-blocked-sup'),block_reason:getR('he-block-reason'),
-    liveness:getR('he-live'),fitzpatrick:getR('he-fitz'),
-    profile_stored:getR('he-profile'),
-    lighting:document.getElementById('he-lighting').value,
-    time_sec:document.getElementById('he-time').value,
-    notes:document.getElementById('he-notes').value};
-  save('helper_enroll',rec,'he-toast',()=>clearForm('helper-e'));
-}
-
-function saveHelperD(){
-  const n=document.getElementById('hd-name').value.trim();
-  const s=document.getElementById('hd-sysuser').value.trim();
-  const d=document.getElementById('hd-day').value;
-  if(!n||!s||!d)return alert('Helper name, system user and day required.');
-  const rec={ts:now(),helper:n,system_user:s,day:d,
-    session_type:getR('hd-type'),initiated_via:getR('hd-init'),
-    result:getR('hd-result'),
-    attempts_before_pass:getR('hd-attempts'),retry_reason:getR('hd-retry-reason'),
-    block_reason:getR('hd-block-reason'),blocked_next:getR('hd-blocked-next'),
-    confidence:document.getElementById('hd-conf').value,
-    helper_present:getR('hd-present'),profile_mixup:getR('hd-mixup'),
-    notes:document.getElementById('hd-notes').value};
-  save('helper_daily',rec,'hd-toast',()=>clearForm('helper-d'));
-}
-
-function saveAM(){
-  const n=document.getElementById('am-name').value.trim();
-  const d=document.getElementById('am-day').value;
-  if(!n||!d)return alert('Marker name and day required.');
-  const rec={ts:now(),supervisor:n,day:d,
-    worker:document.getElementById('am-worker').value,
-    register_loaded:getR('am-reg'),
-    photo_visible:getR('am-photo'),
-    face_match:getR('am-match'),score_visible:getR('am-score'),
-    photo_missing_reason:getR('am-missing-method'),
-    marking:getR('am-mark'),marker_confidence:getR('am-conf'),
-    time_sec:document.getElementById('am-time').value,
-    usability_rating:scaleVals['am-usability']||'',
-    payroll_trust:getR('am-trust'),
-    pain_point:document.getElementById('am-pain').value,
-    notes:document.getElementById('am-notes').value};
-  save('att_marker',rec,'am-toast',()=>clearForm('am'));
-}
-
-function saveRAT(){
-  const w=document.getElementById('rat-worker').value.trim();
-  const c=getR('rat-light');
-  if(!w||!c)return alert('Worker and lighting condition required.');
-  const s1=parseFloat(document.getElementById('rat-s1').value);
-  const s2=parseFloat(document.getElementById('rat-s2').value);
-  const s3=parseFloat(document.getElementById('rat-s3').value);
-  const scores=[s1,s2,s3].filter(s=>!isNaN(s));
-  const avg=scores.length?(scores.reduce((a,b)=>a+b,0)/scores.length):null;
-  const vars=getChecked('#rat-vars .ci');
-  const rec={ts:now(),worker:w,user_type:getR('rat-utype'),day:document.getElementById('rat-day').value,
-    fitzpatrick:getR('rat-fitz'),lighting:c,brightness:getR('rat-bright'),
-    camera_issue:getR('rat-camera'),worker_variables:vars,
-    score_1:isNaN(s1)?'':s1,score_2:isNaN(s2)?'':s2,score_3:isNaN(s3)?'':s3,
-    avg_score:avg!==null?avg.toFixed(3):'',
-    below_threshold:avg!==null?(avg<0.75?'YES — flag':'No'):'',
-    outcome:getR('rat-out'),notes:document.getElementById('rat-notes').value};
-  save('rat',rec,'rat-toast',()=>clearForm('rat'));
-}
-
-function saveIssue(){
-  const d=document.getElementById('iss-day').value;
-  const sev=getR('iss-sev');
-  const what=document.getElementById('iss-what').value.trim();
-  const cond=document.getElementById('iss-cond').value.trim();
-  if(!d||!sev||!what||!cond)return alert('Day, severity, condition and description required.');
-  const rec={ts:now(),worker:document.getElementById('iss-worker').value,
-    day:d,logged_by:getR('iss-by'),severity:sev,
-    module:document.getElementById('iss-module').value,
-    condition:cond,what,developer_action:document.getElementById('iss-action').value};
-  save('issues',rec,'iss-toast',()=>clearForm('issue'));
-}
-
-// ── Clear ────────────────────────────────────────────────────────────────
-function clearForm(s){
-  const ids={
-    obs:['obs-worker','obs-day','obs-time','obs-conf','obs-notes'],
-    worker:['wf-worker','wf-day','wf-pm','wf-q1','wf-q2','wf-q3','wf-q4','wf-q5','wf-notes'],
-    'helper-e':['he-name','he-sysuser','he-day','he-time','he-notes'],
-    'helper-d':['hd-name','hd-sysuser','hd-day','hd-conf','hd-notes'],
-    am:['am-name','am-day','am-worker','am-time','am-pain','am-notes'],
-    rat:['rat-worker','rat-s1','rat-s2','rat-s3','rat-notes'],
-    issue:['iss-worker','iss-day','iss-cond','iss-what','iss-action']
+function processQueue(onDone) {
+  const q = getQueue();
+  if (!q.length) { setSyncUI('ok', 'All synced'); renderSyncSummary(); if (onDone) onDone(0); return; }
+  setSyncUI('warn', 'Syncing ' + q.length + ' records…');
+  const failed = [];
+  const next = i => {
+    if (i >= q.length) {
+      setQueue(failed);
+      const count = failed.length;
+      setSyncUI(count ? 'warn' : 'ok', count ? count + ' unsynced' : 'All synced');
+      renderSyncSummary();
+      if (onDone) onDone(count);
+      return;
+    }
+    const item = q[i];
+    fetch(SCRIPT_URL, { method: 'POST', headers: { 'Content-Type': 'text/plain' }, body: JSON.stringify({ type: item.type, record: item.record }) })
+      .then(r => r.json())
+      .then(d => { if (d.status !== 'ok') { item._attempts = (item._attempts || 0) + 1; failed.push(item); } next(i + 1); })
+      .catch(() => { item._attempts = (item._attempts || 0) + 1; failed.push(item); next(i + 1); });
   };
-  (ids[s]||[]).forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
-  if(s==='rat')document.getElementById('rat-day').value='5';
-  if(s==='obs'){
-    document.getElementById('obs-lighting').value='';
-    document.getElementById('obs-reaction').value='';
-    ['nest-retry','nest-pin'].forEach(id=>nest(id,false));
-    document.getElementById('obs-checks').innerHTML='<p style="font-size:13px;color:var(--text-3)">Select session type above.</p>';
-  }
-  if(s==='helper-e'){
-    document.getElementById('he-lighting').value='';
-    ['nest-he-retry','nest-he-blocked'].forEach(id=>nest(id,false));
-  }
-  if(s==='helper-d'){['nest-hd-retry','nest-hd-blocked'].forEach(id=>nest(id,false));}
-  if(s==='am'){
-    ['nest-am-match','nest-am-missing'].forEach(id=>nest(id,false));
-  }
-  if(s==='issue')document.getElementById('iss-module').value='';
-  document.querySelectorAll(`#${s} input[type=radio]`).forEach(r=>r.checked=false);
-  document.querySelectorAll(`#${s} .ri,.ci`).forEach(el=>el.classList.remove('sel','chk'));
-  document.querySelectorAll(`#${s} .sb`).forEach(b=>b.classList.remove('sel'));
-  if(s==='worker')scaleVals['wf-comfort']='';
-  if(s==='am')scaleVals['am-usability']='';
+  next(0);
 }
 
-// ── Records ──────────────────────────────────────────────────────────────
-function renderRecords(){
-  const defs=[
-    {k:'observations',t:'observation',b:'b-obs',lbl:r=>r.type||'Observation'},
-    {k:'feedback',t:'feedback',b:'b-wf',lbl:()=>'Worker feedback'},
-    {k:'helper_enroll',t:'helper_enroll',b:'b-he',lbl:()=>'Helper enrollment'},
-    {k:'helper_daily',t:'helper_daily',b:'b-hd',lbl:r=>r.session_type||'Helper daily'},
-    {k:'att_marker',t:'att_marker',b:'b-am',lbl:()=>'Att. marker'},
-    {k:'rat',t:'rat',b:'b-rat',lbl:()=>'Recog. accuracy'},
-    {k:'issues',t:'issue',b:'b-iss',lbl:()=>'Issue'},
-  ];
-  const all=defs.flatMap(({k,t,b,lbl})=>getData(k).map(r=>({...r,_t:t,_b:b,_lbl:lbl(r)})));
-  const tf=document.getElementById('filter-type').value;
-  const df=document.getElementById('filter-day').value;
-  const filtered=all.filter(r=>(tf==='all'||r._t===tf)&&(df==='all'||String(r.day)===df)).sort((a,b)=>b.ts.localeCompare(a.ts));
+function forceSync() {
+  if (!navigator.onLine) { alert('No internet connection. Records are saved locally and will sync when you reconnect.'); return; }
+  processQueue(count => {
+    if (count === 0) alert('All records synced successfully.');
+    else alert(count + ' records could not be synced. They will retry automatically when connection improves.');
+  });
+}
 
-  const obs=getData('observations');const fb=getData('feedback');
-  const he=getData('helper_enroll');const hd=getData('helper_daily');
-  const am=getData('att_marker');const rat=getData('rat');const iss=getData('issues');
-  const hIss=iss.filter(i=>i.severity==='H').length;
-  const lowC=rat.filter(r=>r.below_threshold==='YES — flag').length;
-  const blocked=hd.filter(r=>r.result&&r.result.includes('BLOCKED')).length;
+function renderSyncSummary() {
+  const total = ['observations','feedback','att_marker','rat','issues']
+    .reduce((n, k) => n + getData(k).length, 0);
+  const q = getQueue().length;
+  const synced = Math.max(0, total - q);
+  const pct = total ? Math.round((synced / total) * 100) : 100;
+  document.getElementById('sync-bar').style.width = pct + '%';
+  document.getElementById('sync-detail').textContent =
+    total === 0 ? 'No records yet'
+    : q === 0 ? `All ${total} records synced to Google Sheet`
+    : `${synced} of ${total} synced · ${q} queued`;
+}
 
-  document.getElementById('stats-row').innerHTML=`
-    <div class="stat-box"><div class="n">${obs.length}</div><div class="l">Observations</div></div>
-    <div class="stat-box"><div class="n">${fb.length}</div><div class="l">Worker feedback</div></div>
-    <div class="stat-box"><div class="n">${he.length+hd.length}</div><div class="l">Helper records</div></div>
-    <div class="stat-box"><div class="n" style="${blocked>0?'color:var(--red)':''}">${blocked}</div><div class="l">Helper blocks</div></div>
+// ── Save functions ─────────────────────────────────────────────────────────
+function saveRec(key, rec, toastId, clearFn) {
+  const arr = getData(key); arr.unshift(rec); setData(key, arr);
+  push(key, rec);
+  flash(toastId); clearFn();
+}
+
+function saveObs() {
+  if (utype === 'enr') {
+    const name = document.getElementById('enr-name').value.trim();
+    const sys = document.getElementById('enr-sysuser').value.trim();
+    const day = document.getElementById('enr-day').value;
+    if (!name || !sys || !day) return alert('Helper ID, system user and day required.');
+    const rec = { ts: now(), helper: name, system_user: sys, day,
+      helper_number: getR('enr-num'), attempt: getR('enr-attempt'), fail_reason: getR('enr-fail'),
+      liveness: getR('enr-live'), fitzpatrick: getR('enr-fitz'),
+      profile_stored: getR('enr-profile'), profile_confusion: getR('enr-confusion'),
+      lighting: document.getElementById('enr-lighting').value,
+      time_sec: document.getElementById('enr-time').value,
+      notes: document.getElementById('enr-notes').value,
+      _subtype: 'enr'
+    };
+    saveRec('observations', rec, 'obs-toast', clearObs);
+    return;
+  }
+  const worker = document.getElementById('obs-worker').value.trim();
+  const day = document.getElementById('obs-day').value;
+  const time = document.getElementById('obs-time').value;
+  const type = getR('obs-type');
+  if (!worker || !day || !type) return alert('Worker ID, day and session type required.');
+  if (!time) return alert('Time taken is required.');
+  const rec = {
+    ts: now(), worker, day, session_type: type,
+    user_type: utype === 'hlp' ? 'Helper' : 'System user',
+    paired_with: utype === 'hlp' ? document.getElementById('obs-paired').value : '',
+    lighting: document.getElementById('obs-lighting').value,
+    checklist_ticked: getChecked('#obs-checks .ci'),
+    result: getR('obs-result'),
+    attempts_before_pass: getR('obs-attempts'),
+    fail_reason: getR('obs-fail-reason'),
+    pin_attempts: getR('obs-pin-attempts'),
+    pin_reason: getR('obs-pin-reason'),
+    pin_memory: getR('obs-pin-mem'),
+    initiated_via: utype === 'hlp' ? getR('hd-init') : '',
+    helper_present: utype === 'hlp' ? getR('hd-present') : '',
+    profile_mixup: utype === 'hlp' ? getR('hd-mixup') : '',
+    confidence: document.getElementById('obs-conf').value,
+    time_sec: time,
+    attendance_confirmed: getR('att-conf'),
+    crash: getR('crash'),
+    reaction: document.getElementById('obs-reaction').value,
+    notes: document.getElementById('obs-notes').value,
+    _subtype: utype
+  };
+  saveRec('observations', rec, 'obs-toast', clearObs);
+}
+
+function saveWorker() {
+  const w = document.getElementById('wf-worker').value.trim();
+  const d = document.getElementById('wf-day').value;
+  if (!w || !d) return alert('Worker and day required.');
+  const rec = { ts: now(), worker: w, day: d, pm: document.getElementById('wf-pm').value,
+    q1: document.getElementById('wf-q1').value, q2: document.getElementById('wf-q2').value,
+    q3: document.getElementById('wf-q3').value, q4: document.getElementById('wf-q4').value,
+    q5: document.getElementById('wf-q5').value,
+    privacy_concern: getR('wf-privacy'), comfort_rating: scaleVals['wf-comfort'] || '',
+    observer_notes: document.getElementById('wf-notes').value
+  };
+  saveRec('feedback', rec, 'wf-toast', () => clearForm('worker'));
+}
+
+function saveAM() {
+  const n = document.getElementById('am-name').value.trim();
+  const d = document.getElementById('am-day').value;
+  if (!n || !d) return alert('Marker name and day required.');
+  const rec = { ts: now(), supervisor: n, day: d,
+    worker: document.getElementById('am-worker').value,
+    register_loaded: getR('am-reg'), photo_visible: getR('am-photo'),
+    face_match: getR('am-match'), score_visible: getR('am-score'),
+    marking: getR('am-mark'), marker_confidence: getR('am-conf'),
+    time_sec: document.getElementById('am-time').value,
+    usability_rating: scaleVals['am-usability'] || '',
+    payroll_trust: getR('am-trust'),
+    pain_point: document.getElementById('am-pain').value,
+    notes: document.getElementById('am-notes').value
+  };
+  saveRec('att_marker', rec, 'am-toast', () => clearForm('am'));
+}
+
+function saveRAT() {
+  const w = document.getElementById('rat-worker').value.trim();
+  const c = getR('rat-light');
+  if (!w || !c) return alert('Worker and lighting condition required.');
+  const s1 = parseFloat(document.getElementById('rat-s1').value);
+  const s2 = parseFloat(document.getElementById('rat-s2').value);
+  const s3 = parseFloat(document.getElementById('rat-s3').value);
+  const scores = [s1, s2, s3].filter(s => !isNaN(s));
+  const avg = scores.length ? scores.reduce((a, b) => a + b, 0) / scores.length : null;
+  const vars = getChecked('#rat-vars .ci');
+  const rec = { ts: now(), worker: w, user_type: getR('rat-utype'),
+    day: document.getElementById('rat-day').value, fitzpatrick: getR('rat-fitz'),
+    lighting: c, brightness: getR('rat-bright'), camera_issue: getR('rat-camera'),
+    worker_variables: vars,
+    score_1: isNaN(s1) ? '' : s1, score_2: isNaN(s2) ? '' : s2, score_3: isNaN(s3) ? '' : s3,
+    avg_score: avg !== null ? avg.toFixed(3) : '',
+    below_threshold: avg !== null ? (avg < 0.75 ? 'YES — flag' : 'No') : '',
+    outcome: getR('rat-out'), notes: document.getElementById('rat-notes').value
+  };
+  saveRec('rat', rec, 'rat-toast', () => clearForm('rat'));
+}
+
+function saveIssue() {
+  const d = document.getElementById('iss-day').value;
+  const sev = getR('iss-sev');
+  const what = document.getElementById('iss-what').value.trim();
+  const cond = document.getElementById('iss-cond').value.trim();
+  if (!d || !sev || !what || !cond) return alert('Day, severity, condition and description required.');
+  const rec = { ts: now(), worker: document.getElementById('iss-worker').value,
+    day: d, logged_by: getR('iss-by'), severity: sev,
+    module: document.getElementById('iss-module').value,
+    condition: cond, what, developer_action: document.getElementById('iss-action').value
+  };
+  saveRec('issues', rec, 'iss-toast', () => clearForm('issue'));
+}
+
+// ── Clear ──────────────────────────────────────────────────────────────────
+function clearObs() {
+  ['obs-worker','obs-day','obs-time','obs-conf','obs-notes','obs-paired',
+   'enr-name','enr-sysuser','enr-day','enr-time','enr-notes'].forEach(id => {
+    const el = document.getElementById(id); if (el) el.value = '';
+  });
+  document.getElementById('obs-lighting').value = '';
+  document.getElementById('enr-lighting').value = '';
+  document.getElementById('obs-checks').innerHTML = '<p style="font-size:13px;color:var(--text-3)">Select session type above.</p>';
+  document.querySelectorAll('#obs input[type=radio]').forEach(r => r.checked = false);
+  document.querySelectorAll('#obs .ri').forEach(el => el.classList.remove('sel'));
+  document.querySelectorAll('#obs .ci').forEach(el => el.classList.remove('chk'));
+  ['nest-retry','nest-pin','nest-enr-retry'].forEach(id => nest(id, false));
+}
+
+function clearForm(s) {
+  const fieldIds = {
+    worker: ['wf-worker','wf-day','wf-pm','wf-q1','wf-q2','wf-q3','wf-q4','wf-q5','wf-notes'],
+    am: ['am-name','am-day','am-worker','am-time','am-pain','am-notes'],
+    rat: ['rat-worker','rat-s1','rat-s2','rat-s3','rat-notes'],
+    issue: ['iss-worker','iss-day','iss-cond','iss-what','iss-action']
+  };
+  (fieldIds[s] || []).forEach(id => { const el = document.getElementById(id); if (el) el.value = ''; });
+  if (s === 'rat') document.getElementById('rat-day').value = '3';
+  if (s === 'issue') document.getElementById('iss-module').value = '';
+  if (s === 'am') nest('nest-am-match', false);
+  document.querySelectorAll(`#${s} input[type=radio]`).forEach(r => r.checked = false);
+  document.querySelectorAll(`#${s} .ri`).forEach(el => el.classList.remove('sel'));
+  document.querySelectorAll(`#${s} .ci`).forEach(el => el.classList.remove('chk'));
+  document.querySelectorAll(`#${s} .sb`).forEach(b => b.classList.remove('sel'));
+  if (s === 'worker') scaleVals['wf-comfort'] = '';
+  if (s === 'am') scaleVals['am-usability'] = '';
+}
+
+// ── Records ────────────────────────────────────────────────────────────────
+function renderRecords() {
+  const obs = getData('observations');
+  const fb = getData('feedback');
+  const am = getData('att_marker');
+  const rat = getData('rat');
+  const iss = getData('issues');
+
+  const sysObs = obs.filter(r => r._subtype === 'sys');
+  const hlpObs = obs.filter(r => r._subtype === 'hlp');
+  const enrObs = obs.filter(r => r._subtype === 'enr');
+  const hIss = iss.filter(i => i.severity === 'H').length;
+  const lowC = rat.filter(r => r.below_threshold === 'YES — flag').length;
+
+  document.getElementById('stats-row').innerHTML = `
+    <div class="stat-box"><div class="n">${sysObs.length}</div><div class="l">Sys. user obs.</div></div>
+    <div class="stat-box"><div class="n">${hlpObs.length}</div><div class="l">Helper obs.</div></div>
+    <div class="stat-box"><div class="n">${enrObs.length}</div><div class="l">Enrollments</div></div>
+    <div class="stat-box"><div class="n">${fb.length}</div><div class="l">Feedback</div></div>
     <div class="stat-box"><div class="n" style="${hIss>0?'color:var(--red)':''}">${iss.length}</div><div class="l">Issues (${hIss}H)</div></div>
-    <div class="stat-box"><div class="n" style="${lowC>0?'color:var(--red)':''}">${lowC}</div><div class="l">Low conf. flags</div></div>
+    <div class="stat-box"><div class="n" style="${lowC>0?'color:var(--red)':''}">${lowC}</div><div class="l">Low conf.</div></div>
   `;
 
-  const list=document.getElementById('records-list');
-  if(!filtered.length){list.innerHTML='<div class="empty-state">No records yet.</div>';return;}
-  list.innerHTML=filtered.map(r=>{
-    let body='';
-    if(r._t==='observation')body=`${r.result||''} ${r.time_sec?'· '+r.time_sec+'s':''} ${r.confidence?'· conf:'+r.confidence:''}${r.fail_reason?'<br>Fail reason: '+r.fail_reason:''}`;
-    else if(r._t==='feedback')body=`Comfort: <strong>${r.comfort_rating||'—'}/5</strong> · Privacy: ${r.privacy_concern||'—'}`;
-    else if(r._t==='helper_enroll')body=`${r.system_user?'With '+r.system_user:''} · ${r.attempt||''} · Fitz: ${r.fitzpatrick||'—'}`;
-    else if(r._t==='helper_daily'){const bl=r.result&&r.result.includes('BLOCKED');body=`<span ${bl?'class="flag-warn"':''}>${r.result||''}</span> ${r.confidence?'· conf:'+r.confidence:''}`;}
-    else if(r._t==='att_marker')body=`${r.marking||''} · Usability: ${r.usability_rating||'—'}/5`;
-    else if(r._t==='rat'){const fw=r.below_threshold==='YES — flag'?'flag-warn':'';body=`${r.lighting||''} · Fitz: ${r.fitzpatrick||'—'} · Avg: <span class="${fw}">${r.avg_score||'—'}</span>${r.below_threshold==='YES — flag'?' ⚠':''}`;}
-    else if(r._t==='issue'){const sc=r.severity==='H'?'sev-h':r.severity==='M'?'sev-m':'sev-l';body=`<span class="${sc}">${r.severity}</span> ${r.module||''} — ${r.what}`;}
-    const id=(r.worker||r.helper||r.supervisor||'General').replace(/'/g,"\\'");
-    return `<div class="rc"><div class="rc-top"><div class="rc-left"><span class="badge ${r._b}">${r._lbl}</span><span class="rc-w">${r.worker||r.helper||r.supervisor||'General'}</span>${r.day?`<span class="day-b">Day ${r.day}</span>`:''}</div><div style="display:flex;align-items:center;gap:4px"><span class="rc-t">${r.ts}</span><button class="del-btn" onclick="delRec('${r._t}','${r.ts}','${id}')">✕</button></div></div><div class="rc-body">${body}</div></div>`;
+  const tf = document.getElementById('filter-type').value;
+  const df = document.getElementById('filter-day').value;
+
+  const defs = [
+    ...obs.map(r => ({ ...r, _t: r._subtype || 'sys', _b: r._subtype === 'enr' ? 'b-enr' : r._subtype === 'hlp' ? 'b-hlp' : 'b-sys', _lbl: r._subtype === 'enr' ? 'Helper enrollment' : r._subtype === 'hlp' ? 'Helper' : 'System user', _id: r.worker || r.helper })),
+    ...fb.map(r => ({ ...r, _t: 'feedback', _b: 'b-wf', _lbl: 'Feedback', _id: r.worker })),
+    ...am.map(r => ({ ...r, _t: 'att_marker', _b: 'b-am', _lbl: 'Att. marker', _id: r.supervisor })),
+    ...rat.map(r => ({ ...r, _t: 'rat', _b: 'b-rat', _lbl: 'Recog. accuracy', _id: r.worker })),
+    ...iss.map(r => ({ ...r, _t: 'issue', _b: 'b-iss', _lbl: 'Issue', _id: r.worker })),
+  ].filter(r => (tf === 'all' || r._t === tf) && (df === 'all' || String(r.day) === df))
+   .sort((a, b) => b.ts.localeCompare(a.ts));
+
+  const list = document.getElementById('records-list');
+  if (!defs.length) { list.innerHTML = '<div class="empty-state">No records yet.</div>'; return; }
+
+  const qTimes = new Set(getQueue().map(i => i.record.ts));
+
+  list.innerHTML = defs.map(r => {
+    const synced = !qTimes.has(r.ts);
+    const dotClass = synced ? 'synced' : 'pending';
+    const dotTitle = synced ? 'Synced' : 'Pending sync';
+    let body = '';
+    if (r._t === 'sys' || r._t === 'hlp') body = `${r.result || ''} ${r.time_sec ? '· ' + r.time_sec + 's' : ''} ${r.confidence ? '· conf:' + r.confidence : ''}${r.fail_reason ? '<br><span style="color:var(--text-3)">Fail: ' + r.fail_reason + '</span>' : ''}`;
+    else if (r._t === 'enr') body = `${r.attempt || ''} · Fitz: ${r.fitzpatrick || '—'} · Liveness: ${r.liveness || '—'}`;
+    else if (r._t === 'feedback') body = `Comfort: <strong>${r.comfort_rating || '—'}/5</strong> · Privacy: ${r.privacy_concern || '—'}`;
+    else if (r._t === 'att_marker') body = `${r.marking || ''} · Usability: ${r.usability_rating || '—'}/5`;
+    else if (r._t === 'rat') { const fw = r.below_threshold === 'YES — flag' ? 'flag-warn' : ''; body = `${r.lighting || ''} · Fitz: ${r.fitzpatrick || '—'} · Avg: <span class="${fw}">${r.avg_score || '—'}</span>${r.below_threshold === 'YES — flag' ? ' ⚠' : ''}`; }
+    else if (r._t === 'issue') { const sc = r.severity === 'H' ? 'sev-h' : r.severity === 'M' ? 'sev-m' : 'sev-l'; body = `<span class="${sc}">${r.severity}</span> ${r.module || ''} — ${r.what}`; }
+    const safeId = (r._id || '').replace(/'/g, "\\'");
+    return `<div class="rc">
+      <div class="rc-top">
+        <div class="rc-left">
+          <span class="sync-dot ${dotClass}" title="${dotTitle}"></span>
+          <span class="badge ${r._b}">${r._lbl}</span>
+          <span class="rc-w">${r._id || 'General'}</span>
+          ${r.day ? `<span class="day-b">Day ${r.day}</span>` : ''}
+        </div>
+        <div style="display:flex;align-items:center;gap:4px">
+          <span class="rc-t">${r.ts}</span>
+          <button class="del-btn" onclick="delRec('${r._t}','${r.ts}','${safeId}')">✕</button>
+        </div>
+      </div>
+      <div class="rc-body">${body}</div>
+    </div>`;
   }).join('');
 }
 
-function delRec(type,ts,id){
-  if(!confirm('Delete?'))return;
-  const map={observation:'observations',feedback:'feedback',helper_enroll:'helper_enroll',helper_daily:'helper_daily',att_marker:'att_marker',rat:'rat',issue:'issues'};
-  const key=map[type];
-  setData(key,getData(key).filter(r=>!(r.ts===ts&&(r.worker||r.helper||r.supervisor||'').replace(/'/g,"\\'")===(id||''))));
-  renderRecords();
+function delRec(type, ts, id) {
+  if (!confirm('Delete this record?')) return;
+  const keyMap = { sys: 'observations', hlp: 'observations', enr: 'observations', feedback: 'feedback', att_marker: 'att_marker', rat: 'rat', issue: 'issues' };
+  const key = keyMap[type] || type;
+  setData(key, getData(key).filter(r => !(r.ts === ts && (r.worker || r.helper || r.supervisor || '') === id)));
+  renderRecords(); renderSyncSummary();
 }
 
-function exportCSV(key){
-  const data=getData(key);if(!data.length)return alert('No records yet.');
-  const cols=Object.keys(data[0]).filter(k=>!k.startsWith('_'));
-  const rows=[cols.join(','),...data.map(r=>cols.map(k=>`"${String(r[k]||'').replace(/"/g,'""')}"`).join(','))];
-  const a=document.createElement('a');
-  a.href=URL.createObjectURL(new Blob([rows.join('\r\n')],{type:'text/csv'}));
-  a.download=`pilot_${key}_${new Date().toISOString().slice(0,10)}.csv`;a.click();
+function exportCSV(key) {
+  const data = key === '_queue' ? getQueue().map(i => ({ ...i.record, queued_at: i.queued_at, sync_attempts: i._attempts })) : getData(key);
+  if (!data.length) return alert('No records to export.');
+  const cols = Object.keys(data[0]).filter(k => !k.startsWith('_'));
+  const rows = [cols.join(','), ...data.map(r => cols.map(k => `"${String(r[k] || '').replace(/"/g, '""')}"`).join(','))];
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([rows.join('\r\n')], { type: 'text/csv' }));
+  a.download = `pilot_${key}_${new Date().toISOString().slice(0, 10)}.csv`;
+  a.click();
 }
 
-// ── Init ─────────────────────────────────────────────────────────────────
-(function(){
-  updateRetry();
-  SCRIPT_URL?uSI('● Sheet connected — syncs automatically','rgba(93,202,165,.9)'):uSI('● Local only','rgba(255,255,255,.4)');
-  if(navigator.onLine&&getQ().length>0)retryQueue();
-  window.addEventListener('online',()=>{if(getQ().length>0){uSI('● Back online — syncing queued…','rgba(255,180,50,.9)');setTimeout(retryQueue,1500);}});
+// ── Init & background sync ─────────────────────────────────────────────────
+(function init() {
+  // Initial sync state
+  const q = getQueue();
+  if (!SCRIPT_URL) setSyncUI('off', 'Local only');
+  else if (q.length === 0) setSyncUI('ok', 'All synced');
+  else setSyncUI('warn', q.length + ' unsynced');
+
+  // Auto-process queue on load if online
+  if (SCRIPT_URL && navigator.onLine && q.length > 0) processQueue();
+
+  // Retry on reconnect
+  window.addEventListener('online', () => {
+    setSyncUI('warn', 'Back online — syncing…');
+    setTimeout(() => processQueue(), 1000);
+  });
+
+  window.addEventListener('offline', () => setSyncUI('warn', 'Offline — saving locally'));
+
+  // Retry on tab focus (catches phone coming back from background)
+  document.addEventListener('visibilitychange', () => {
+    if (!document.hidden && SCRIPT_URL && navigator.onLine && getQueue().length > 0) {
+      setTimeout(() => processQueue(), 800);
+    }
+  });
+
+  // Periodic background retry every 3 minutes
+  setInterval(() => {
+    if (SCRIPT_URL && navigator.onLine && getQueue().length > 0) processQueue();
+  }, 3 * 60 * 1000);
 })();
 </script>
 </body>
